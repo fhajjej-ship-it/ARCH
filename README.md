@@ -33,7 +33,7 @@ The output is designed to keep coding agents from improvising product scope, sta
 Install the latest release:
 
 ```bash
-git clone --branch v0.2.1 --depth 1 https://github.com/fhajjej-ship-it/ARCH.git
+git clone --branch v0.2.2 --depth 1 https://github.com/fhajjej-ship-it/ARCH.git
 cd ARCH
 mkdir -p ~/.codex/skills/arch
 cp -R arch/. ~/.codex/skills/arch/

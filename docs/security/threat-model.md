@@ -57,12 +57,13 @@ Controls:
 
 - CI runs with top-level `contents: read` permissions.
 - CI does not use `pull_request_target`.
+- GitHub Actions are pinned to full commit SHAs.
 - Release installs are pinned to explicit version tags.
 - Release notes and eval baselines record verification evidence per version.
 
 Accepted tradeoff:
 
-- GitHub Actions are version-pinned by major version instead of commit SHA. For this small public repo, this keeps maintenance reasonable. Revisit SHA pinning if ARCH starts handling credentials, publishing artifacts automatically, or accepting external contributors at higher volume.
+- Action SHA pins must be refreshed manually when upstream major-version tags move. Validation enforces immutable action references but does not prove the pinned action commits are the newest upstream releases.
 
 ### T3: Committed secret leakage
 

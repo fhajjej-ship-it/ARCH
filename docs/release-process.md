@@ -19,7 +19,16 @@ ARCH uses simple semantic versioning.
 
 1. Update `VERSION`.
 2. Update `RELEASE_NOTES.md`.
-3. Run validation:
+3. Refresh pinned GitHub Action SHAs when the upstream action tag changes:
+
+```bash
+git ls-remote https://github.com/actions/checkout.git refs/tags/v4
+git ls-remote https://github.com/actions/setup-python.git refs/tags/v5
+```
+
+Keep `.github/workflows/ci.yml` pinned to full 40-character commit SHAs.
+
+4. Run validation:
 
 ```bash
 python3 scripts/validate_arch.py
@@ -28,15 +37,26 @@ python3 scripts/evaluate_arch.py --write-baseline docs/evals/baseline-results.js
 python3 -m py_compile arch/scripts/bootstrap_context.py scripts/validate_arch.py scripts/evaluate_arch.py
 ```
 
-4. Commit the release changes.
-5. Tag the commit:
+5. Commit the release changes.
+6. Prefer a signed tag when local signing is configured:
 
 ```bash
-git tag v$(cat VERSION)
+git tag -s "v$(cat VERSION)" -m "ARCH v$(cat VERSION)"
+```
+
+If signing is not configured, use an annotated tag and record that limitation in the release provenance:
+
+```bash
+git tag -a "v$(cat VERSION)" -m "ARCH v$(cat VERSION)"
+```
+
+7. Push the release commit and tag:
+
+```bash
 git push origin main --tags
 ```
 
-6. Create the GitHub release:
+8. Create the GitHub release:
 
 ```bash
 gh release create "v$(cat VERSION)" --title "ARCH v$(cat VERSION)" --notes-file /tmp/arch-release-notes.md
@@ -44,10 +64,20 @@ gh release create "v$(cat VERSION)" --title "ARCH v$(cat VERSION)" --notes-file 
 
 Use the matching section from `RELEASE_NOTES.md` as the notes file content.
 
+9. Record release provenance in `docs/security/security-review.md` or the release notes:
+
+- release version
+- release commit SHA
+- tag name and whether the tag is signed or annotated
+- GitHub release URL
+- CI run IDs for `main` and the release tag
+- validation commands run locally
+- pinned GitHub Action SHAs
+
 ## Local Install From A Release
 
 ```bash
-git clone --branch v0.2.1 --depth 1 https://github.com/fhajjej-ship-it/ARCH.git
+git clone --branch v0.2.2 --depth 1 https://github.com/fhajjej-ship-it/ARCH.git
 cd ARCH
 mkdir -p ~/.codex/skills/arch
 cp -R arch/. ~/.codex/skills/arch/

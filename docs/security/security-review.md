@@ -40,6 +40,10 @@ permissions:
 
 The validator also rejects `pull_request_target` usage.
 
+### H1.1: CI actions pinned to immutable SHAs
+
+The GitHub Actions workflow pins third-party actions to full commit SHAs instead of mutable major-version tags. The validator rejects any `uses:` entry that is not pinned to a 40-character SHA.
+
 ### H2: Eval baseline output confined to the repo
 
 `scripts/evaluate_arch.py --write-baseline` now refuses absolute or relative paths that resolve outside the repository.
@@ -48,9 +52,23 @@ The validator also rejects `pull_request_target` usage.
 
 `scripts/validate_arch.py` scans text files for common high-confidence token formats such as OpenAI-style keys, GitHub tokens, AWS access keys, private keys, Slack tokens, Supabase service keys, and Stripe live secrets.
 
+### H4: Security reporting and ownership added
+
+`SECURITY.md` defines private vulnerability reporting expectations. `.github/CODEOWNERS` assigns release, workflow, security documentation, and local file-write scripts to the repository owner.
+
+## Release Provenance
+
+### v0.2.1
+
+- Commit: `2d6bb6d0037dc7380a811a3e3e08bd6265e15904`
+- Tag: `v0.2.1`
+- GitHub release: `https://github.com/fhajjej-ship-it/ARCH/releases/tag/v0.2.1`
+- CI: `main` run `27871162442`, tag run `27871162512`
+- Validation: `python3 scripts/validate_arch.py`, `python3 scripts/evaluate_arch.py`, `python3 scripts/evaluate_arch.py --write-baseline docs/evals/baseline-results.json`, `python3 -m py_compile arch/scripts/bootstrap_context.py scripts/validate_arch.py scripts/evaluate_arch.py`
+
 ## Residual Risk
 
-- GitHub Actions are pinned by major version, not commit SHA. This is acceptable for the current repo because CI only validates local files with read-only permissions. If ARCH adds automated publishing or credentialed workflows, pin actions by SHA.
+- GitHub Actions are pinned to commit SHAs, but action updates are manual and should be refreshed during releases.
 - ARCH writes developer-approved architecture context. It does not prove downstream generated applications are secure.
 - The symlink protections reduce accidental and malicious path escapes, but they are not a general-purpose sandbox for running untrusted code.
 

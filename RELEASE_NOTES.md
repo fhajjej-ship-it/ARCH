@@ -1,5 +1,27 @@
 # Release Notes
 
+## v0.2.2 - 2026-06-20
+
+Release security release.
+
+### Highlights
+
+- Pinned GitHub Actions to immutable commit SHAs.
+- Added validation that rejects unpinned GitHub Actions.
+- Added `SECURITY.md` with private vulnerability reporting guidance.
+- Added `.github/CODEOWNERS` for release, workflow, security, and local file-write paths.
+- Added release provenance requirements and signed-tag guidance to the release process.
+- Updated security documentation to reflect the hardened release posture.
+
+### Verification
+
+```bash
+python3 scripts/validate_arch.py
+python3 scripts/evaluate_arch.py
+python3 scripts/evaluate_arch.py --write-baseline docs/evals/baseline-results.json
+python3 -m py_compile arch/scripts/bootstrap_context.py scripts/validate_arch.py scripts/evaluate_arch.py
+```
+
 ## v0.2.1 - 2026-06-20
 
 Security hardening release.

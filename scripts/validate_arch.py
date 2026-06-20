@@ -283,6 +283,14 @@ def validate_ci_security() -> None:
         fail("CI must declare top-level permissions")
     if not re.search(r"(?m)^\s+contents:\s+read\s*$", workflow):
         fail("CI permissions must limit contents to read")
+    unpinned_actions = [
+        line.strip()
+        for line in workflow.splitlines()
+        if re.match(r"uses:\s+.+@", line.strip())
+        and not re.match(r"uses:\s+[^@\s]+@[0-9a-f]{40}(?:\s+#.*)?$", line.strip())
+    ]
+    if unpinned_actions:
+        fail("CI actions must be pinned to commit SHAs: " + ", ".join(unpinned_actions))
     ok("CI workflow permissions are constrained")
 
 
@@ -311,6 +319,8 @@ def validate_secret_hygiene() -> None:
 
 def validate_security_docs() -> None:
     for relative_path in (
+        "SECURITY.md",
+        ".github/CODEOWNERS",
         "docs/security/threat-model.md",
         "docs/security/security-review.md",
     ):
@@ -319,6 +329,30 @@ def validate_security_docs() -> None:
             fail(f"Missing security documentation: {relative_path}")
         if not path.read_text(encoding="utf-8").strip():
             fail(f"Security documentation is empty: {relative_path}")
+    security_policy = read(ROOT / "SECURITY.md")
+    for phrase in (
+        "Reporting A Vulnerability",
+        "GitHub private vulnerability reporting",
+        "Release Security",
+    ):
+        if phrase not in security_policy:
+            fail(f"SECURITY.md missing required section or phrase: {phrase}")
+    codeowners = read(ROOT / ".github" / "CODEOWNERS")
+    for phrase in (
+        "/.github/workflows/ci.yml @fhajjej-ship-it",
+        "/arch/scripts/bootstrap_context.py @fhajjej-ship-it",
+        "/scripts/validate_arch.py @fhajjej-ship-it",
+    ):
+        if phrase not in codeowners:
+            fail(f"CODEOWNERS missing sensitive path owner: {phrase}")
+    release_process = read(ROOT / "docs" / "release-process.md")
+    for phrase in (
+        "Keep `.github/workflows/ci.yml` pinned to full 40-character commit SHAs.",
+        "git tag -s",
+        "Record release provenance",
+    ):
+        if phrase not in release_process:
+            fail(f"Release process missing security provenance requirement: {phrase}")
     ok("Security documentation is present")
 
 

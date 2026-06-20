@@ -1,0 +1,15 @@
+# Security-sensitive ARCH files.
+#
+# Keep ownership narrow so changes to release, CI, and local file-write paths
+# get an explicit review from the repository owner.
+
+/.github/CODEOWNERS @fhajjej-ship-it
+/.github/workflows/ci.yml @fhajjej-ship-it
+/SECURITY.md @fhajjej-ship-it
+/VERSION @fhajjej-ship-it
+/RELEASE_NOTES.md @fhajjej-ship-it
+/docs/release-process.md @fhajjej-ship-it
+/docs/security/ @fhajjej-ship-it
+/arch/scripts/bootstrap_context.py @fhajjej-ship-it
+/scripts/validate_arch.py @fhajjej-ship-it
+/scripts/evaluate_arch.py @fhajjej-ship-it
