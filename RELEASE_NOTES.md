@@ -1,5 +1,24 @@
 # Release Notes
 
+## v0.2.0 - 2026-06-20
+
+Evaluation loop release.
+
+### Highlights
+
+- Added an ARCH eval pack with realistic project scenarios across new web apps, AI products, existing repos, CLIs, mobile, ops tools, and regulated-risk ideas.
+- Added a static evaluator for the 3-option interview contract and context-writing expectations.
+- Added baseline eval result generation for release evidence.
+- Wired evals into CI and local validation docs.
+
+### Verification
+
+```bash
+python3 scripts/validate_arch.py
+python3 scripts/evaluate_arch.py
+python3 -m py_compile arch/scripts/bootstrap_context.py scripts/validate_arch.py scripts/evaluate_arch.py
+```
+
 ## v0.1.1 - 2026-06-20
 
 Question usability release.

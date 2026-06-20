@@ -153,12 +153,26 @@ def validate_versioning() -> None:
     ok(f"Version metadata is valid: v{version}")
 
 
+def validate_eval_pack() -> None:
+    required_paths = [
+        ROOT / "docs" / "evals" / "README.md",
+        ROOT / "docs" / "evals" / "scenarios.json",
+        ROOT / "docs" / "evals" / "baseline-results.json",
+        ROOT / "scripts" / "evaluate_arch.py",
+    ]
+    for path in required_paths:
+        if not path.exists():
+            fail(f"Missing eval artifact: {path.relative_to(ROOT)}")
+    ok("Eval pack files are present")
+
+
 def main() -> int:
     validate_skill()
     validate_agents_metadata()
     validate_templates()
     validate_bootstrap()
     validate_versioning()
+    validate_eval_pack()
     ok("ARCH validation passed")
     return 0
 

@@ -1,0 +1,51 @@
+{
+  "version": "0.2.0",
+  "generated_at": "2026-06-20T11:08:52.864345+00:00",
+  "scenario_count": 7,
+  "passed": true,
+  "score": 1.0,
+  "results": [
+    {
+      "id": "empty-summer-planner",
+      "category": "new_web_app",
+      "score": 1.0,
+      "issues": []
+    },
+    {
+      "id": "ai-founder-spec-tool",
+      "category": "ai_product",
+      "score": 1.0,
+      "issues": []
+    },
+    {
+      "id": "existing-nextjs-saas",
+      "category": "existing_repo",
+      "score": 1.0,
+      "issues": []
+    },
+    {
+      "id": "developer-cli-tool",
+      "category": "cli_tool",
+      "score": 1.0,
+      "issues": []
+    },
+    {
+      "id": "mobile-habit-app",
+      "category": "mobile",
+      "score": 1.0,
+      "issues": []
+    },
+    {
+      "id": "internal-ops-dashboard",
+      "category": "ops_tool",
+      "score": 1.0,
+      "issues": []
+    },
+    {
+      "id": "health-advice-app",
+      "category": "regulated_risk",
+      "score": 1.0,
+      "issues": []
+    }
+  ]
+}

@@ -23,7 +23,9 @@ ARCH uses simple semantic versioning.
 
 ```bash
 python3 scripts/validate_arch.py
-python3 -m py_compile arch/scripts/bootstrap_context.py scripts/validate_arch.py
+python3 scripts/evaluate_arch.py
+python3 scripts/evaluate_arch.py --write-baseline docs/evals/baseline-results.json
+python3 -m py_compile arch/scripts/bootstrap_context.py scripts/validate_arch.py scripts/evaluate_arch.py
 ```
 
 4. Commit the release changes.

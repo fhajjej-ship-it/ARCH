@@ -33,7 +33,7 @@ The output is designed to keep coding agents from improvising product scope, sta
 Install the latest release:
 
 ```bash
-git clone --branch v0.1.1 --depth 1 https://github.com/fhajjej-ship-it/ARCH.git
+git clone --branch v0.2.0 --depth 1 https://github.com/fhajjej-ship-it/ARCH.git
 cd ARCH
 mkdir -p ~/.codex/skills/arch
 cp -R arch/. ~/.codex/skills/arch/
@@ -81,11 +81,16 @@ ARCH creates that structure before code generation starts.
 
 See `examples/ghost-ai-context/context/` for an example context folder from a collaborative architecture workspace project.
 
+## Eval Pack
+
+ARCH includes a static eval pack in `docs/evals/` with realistic project scenarios for new apps, existing repos, AI products, CLIs, mobile apps, ops tools, and regulated-risk ideas. Use it before releases to check the 3-option interview and context-writing workflow.
+
 ## Validation And Releases
 
 ```bash
 python3 scripts/validate_arch.py
-python3 -m py_compile arch/scripts/bootstrap_context.py scripts/validate_arch.py
+python3 scripts/evaluate_arch.py
+python3 -m py_compile arch/scripts/bootstrap_context.py scripts/validate_arch.py scripts/evaluate_arch.py
 ```
 
 ARCH uses semantic versions in `VERSION`, release notes in `RELEASE_NOTES.md`, Git tags like `v0.1.0`, and GitHub Releases. See `docs/release-process.md`.

@@ -1,0 +1,310 @@
+[
+  {
+    "id": "empty-summer-planner",
+    "category": "new_web_app",
+    "title": "Empty repo summer planning app",
+    "repo_state": "Empty Git repository with no README, app files, or context folder.",
+    "prompt": "Use $arch. I want to build a summer app.",
+    "expected_first_question": {
+      "question": "What product are we building, and who is the first target user?",
+      "options": [
+        {
+          "label": "Recommended",
+          "text": "A summer planning web app for one friend-group organizer who needs to collect trip ideas, availability, and final decisions in one place."
+        },
+        {
+          "label": "Second option",
+          "text": "A family summer activity planner for parents who need to coordinate events, budgets, and schedules."
+        },
+        {
+          "label": "Other",
+          "text": "The developer describes a different product and first target user."
+        }
+      ],
+      "why_recommended": "It narrows a vague seasonal app into one user, one job, and a web workflow that can be validated quickly."
+    },
+    "confirmed_answer_flow": [
+      {
+        "answer": "1",
+        "decision": "Build a friend-group summer planning web app for one organizer."
+      },
+      {
+        "answer": "1",
+        "decision": "Value proof is creating one plan with invitees, availability, ideas, and a selected decision."
+      }
+    ],
+    "context_expectations": {
+      "context/project-overview.md": ["target user", "MVP goal", "core user flow", "out of scope"],
+      "context/architecture-context.md": ["web app", "data model", "deployment"],
+      "context/progress-tracker.md": ["confirmed decisions", "open questions", "next up"],
+      "context/feature-specs/01-foundation.md": ["check when done", "requirements"]
+    },
+    "red_flags": [
+      "asks all seven intake questions at once",
+      "recommends a broad social network",
+      "adds payments or analytics dashboard to v1"
+    ]
+  },
+  {
+    "id": "ai-founder-spec-tool",
+    "category": "ai_product",
+    "title": "AI founder spec generator",
+    "repo_state": "Fresh repository with product name only.",
+    "prompt": "Use $arch. Build a product where founders turn messy startup ideas into specs AI coding agents can implement.",
+    "expected_first_question": {
+      "question": "Who is the first target user, and what messy idea-to-spec job must v1 solve?",
+      "options": [
+        {
+          "label": "Recommended",
+          "text": "Solo technical founders who need to turn one rough product idea into an implementation-ready context folder and feature specs."
+        },
+        {
+          "label": "Second option",
+          "text": "Agencies that need to turn client discovery notes into scoped build plans."
+        },
+        {
+          "label": "Other",
+          "text": "The developer names another first buyer/user and job."
+        }
+      ],
+      "why_recommended": "Solo founders make the smallest first user segment and map directly to ARCH-style context output."
+    },
+    "confirmed_answer_flow": [
+      {
+        "answer": "1",
+        "decision": "Target solo technical founders."
+      },
+      {
+        "answer": "2",
+        "decision": "Start as a local-first CLI if the developer wants to prove workflow before web auth."
+      }
+    ],
+    "context_expectations": {
+      "context/project-overview.md": ["solo technical founders", "idea-to-spec", "MVP"],
+      "context/architecture-context.md": ["AI output validation", "prompt/schema versioning", "artifact storage"],
+      "context/code-standards.md": ["server-side validation", "AI output validation"],
+      "context/progress-tracker.md": ["confirmed decisions", "open questions", "next up"],
+      "context/feature-specs/02-core-generation.md": ["structured spec generation", "failure state"]
+    },
+    "red_flags": [
+      "builds a marketplace or team workspace in v1",
+      "stores unvalidated model output as trusted state",
+      "omits prompt/schema versioning"
+    ]
+  },
+  {
+    "id": "existing-nextjs-saas",
+    "category": "existing_repo",
+    "title": "Existing Next.js SaaS rescue",
+    "repo_state": "Next.js app with package.json, app routes, Prisma schema, and no context folder.",
+    "prompt": "Use $arch to inspect this repo and create context so Codex can finish the MVP without drifting.",
+    "expected_first_question": {
+      "question": "What is the one MVP workflow this existing app must complete first?",
+      "options": [
+        {
+          "label": "Recommended",
+          "text": "Preserve the existing Next.js and Prisma stack, then define one end-to-end authenticated user workflow as the MVP."
+        },
+        {
+          "label": "Second option",
+          "text": "Pause feature work and first document architecture, data ownership, and incomplete routes before selecting the workflow."
+        },
+        {
+          "label": "Other",
+          "text": "The developer identifies a different first workflow or constraint."
+        }
+      ],
+      "why_recommended": "Existing code should be preserved unless it blocks the MVP; one workflow gives future agents a clear path."
+    },
+    "confirmed_answer_flow": [
+      {
+        "answer": "1",
+        "decision": "Preserve the current stack and define the first complete authenticated workflow."
+      }
+    ],
+    "context_expectations": {
+      "context/project-overview.md": ["MVP workflow", "target user", "scope cuts"],
+      "context/architecture-context.md": ["existing stack", "system boundaries", "auth", "database"],
+      "context/ai-workflow-rules.md": ["preserve existing behavior", "update context"],
+      "context/progress-tracker.md": ["repo inspection findings", "next implementation unit"],
+      "context/feature-specs/01-complete-core-flow.md": ["existing files", "checks"]
+    },
+    "red_flags": [
+      "recommends a rewrite without evidence",
+      "ignores existing package and schema files",
+      "fails to bootstrap context before continuing"
+    ]
+  },
+  {
+    "id": "developer-cli-tool",
+    "category": "cli_tool",
+    "title": "Developer CLI for repo cleanup",
+    "repo_state": "Empty repo named repo-cleaner.",
+    "prompt": "Use $arch. I want a tool that cleans up messy repos before agents work on them.",
+    "expected_first_question": {
+      "question": "What is the first cleanup job and who runs it?",
+      "options": [
+        {
+          "label": "Recommended",
+          "text": "A local CLI for individual developers that scans a repo and writes a cleanup report plus safe suggested file changes."
+        },
+        {
+          "label": "Second option",
+          "text": "A GitHub Action that comments on pull requests with cleanup recommendations."
+        },
+        {
+          "label": "Other",
+          "text": "The developer describes another workflow or runner."
+        }
+      ],
+      "why_recommended": "A CLI avoids auth and hosting while proving whether the cleanup workflow is useful."
+    },
+    "confirmed_answer_flow": [
+      {
+        "answer": "1",
+        "decision": "Build local CLI first."
+      }
+    ],
+    "context_expectations": {
+      "context/project-overview.md": ["developer CLI", "repo cleanup report", "MVP"],
+      "context/architecture-context.md": ["CLI", "file system writes", "dry run"],
+      "context/code-standards.md": ["no silent overwrite", "dry-run behavior"],
+      "context/progress-tracker.md": ["confirmed decisions", "open questions", "next up"],
+      "context/feature-specs/01-cli-scan-report.md": ["manual verification", "sample repo"]
+    },
+    "red_flags": [
+      "starts with SaaS dashboard",
+      "writes destructive changes without dry-run",
+      "omits local filesystem safety rules"
+    ]
+  },
+  {
+    "id": "mobile-habit-app",
+    "category": "mobile",
+    "title": "Mobile habit accountability app",
+    "repo_state": "No code yet. User says mobile matters.",
+    "prompt": "Use $arch. I want to build a habit accountability app with friends.",
+    "expected_first_question": {
+      "question": "Who is the first user and what accountability loop must v1 prove?",
+      "options": [
+        {
+          "label": "Recommended",
+          "text": "A responsive web app for one small friend group to create one shared habit, check in daily, and see streak status."
+        },
+        {
+          "label": "Second option",
+          "text": "An Expo mobile app if push notifications and native mobile use are required on day one."
+        },
+        {
+          "label": "Other",
+          "text": "The developer specifies a different first user or mobile requirement."
+        }
+      ],
+      "why_recommended": "Responsive web proves the behavior faster; Expo is justified if native notifications are core to the value proof."
+    },
+    "confirmed_answer_flow": [
+      {
+        "answer": "2",
+        "decision": "Use Expo because push notifications are required for v1."
+      }
+    ],
+    "context_expectations": {
+      "context/project-overview.md": ["friend group", "daily check-in", "value proof"],
+      "context/architecture-context.md": ["Expo", "notifications", "auth"],
+      "context/ui-context.md": ["mobile-first", "empty states", "accessibility"],
+      "context/progress-tracker.md": ["confirmed decisions", "open questions", "next up"],
+      "context/feature-specs/01-habit-check-in.md": ["check-in flow", "notification permission"]
+    },
+    "red_flags": [
+      "ignores the mobile requirement",
+      "builds complex social feeds in v1",
+      "omits notification permission failure state"
+    ]
+  },
+  {
+    "id": "internal-ops-dashboard",
+    "category": "ops_tool",
+    "title": "Internal ops dashboard",
+    "repo_state": "Existing spreadsheet process, no app code.",
+    "prompt": "Use $arch. We need an internal dashboard for support escalations.",
+    "expected_first_question": {
+      "question": "What repeated support decision must the dashboard make easier first?",
+      "options": [
+        {
+          "label": "Recommended",
+          "text": "A single-role internal web app where support leads triage open escalations by owner, severity, and next action."
+        },
+        {
+          "label": "Second option",
+          "text": "Keep the spreadsheet and add an import/report generator before building a full dashboard."
+        },
+        {
+          "label": "Other",
+          "text": "The developer names a different first operational decision."
+        }
+      ],
+      "why_recommended": "It focuses on the repeated decision instead of building a broad analytics product."
+    },
+    "confirmed_answer_flow": [
+      {
+        "answer": "1",
+        "decision": "Build a single-role escalation triage web app."
+      }
+    ],
+    "context_expectations": {
+      "context/project-overview.md": ["support leads", "triage", "out of scope"],
+      "context/architecture-context.md": ["internal auth", "escalation model", "audit-sensitive updates"],
+      "context/ui-context.md": ["dense table", "filters", "empty state"],
+      "context/progress-tracker.md": ["confirmed decisions", "open questions", "next up"],
+      "context/feature-specs/01-escalation-list.md": ["owner", "severity", "next action"]
+    },
+    "red_flags": [
+      "starts with analytics dashboards",
+      "adds complex permissions before one role works",
+      "omits audit-sensitive update handling"
+    ]
+  },
+  {
+    "id": "health-advice-app",
+    "category": "regulated_risk",
+    "title": "High-stakes health advice product",
+    "repo_state": "Empty repo with vague healthcare idea.",
+    "prompt": "Use $arch. I want an AI app that gives people medical advice from symptoms.",
+    "expected_first_question": {
+      "question": "What safe health-adjacent job can v1 support without diagnosing or replacing a clinician?",
+      "options": [
+        {
+          "label": "Recommended",
+          "text": "A symptom note organizer that helps users prepare structured notes and questions for a licensed clinician."
+        },
+        {
+          "label": "Second option",
+          "text": "A clinic-facing intake summarizer used by authorized staff with clinician review."
+        },
+        {
+          "label": "Other",
+          "text": "The developer specifies a safer regulated workflow and review boundary."
+        }
+      ],
+      "why_recommended": "Direct medical advice is high risk; a note organizer can deliver value while preserving clinician judgment."
+    },
+    "confirmed_answer_flow": [
+      {
+        "answer": "1",
+        "decision": "Build a clinician-prep note organizer, not a diagnosis tool."
+      }
+    ],
+    "context_expectations": {
+      "context/project-overview.md": ["not medical advice", "clinician prep", "out of scope"],
+      "context/architecture-context.md": ["sensitive data", "security boundaries", "AI output disclaimers"],
+      "context/code-standards.md": ["privacy", "validation", "no diagnosis claims"],
+      "context/progress-tracker.md": ["confirmed decisions", "open questions", "next up"],
+      "context/feature-specs/01-symptom-notes.md": ["disclaimer", "export", "delete data"]
+    },
+    "red_flags": [
+      "accepts direct diagnosis as v1",
+      "omits privacy/security requirements",
+      "omits clinician review or disclaimer boundary"
+    ]
+  }
+]
