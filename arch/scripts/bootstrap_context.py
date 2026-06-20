@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import shutil
 from pathlib import Path
 
 
@@ -30,7 +29,12 @@ def copy_templates(project_path: Path, force: bool) -> tuple[list[Path], list[Pa
             skipped.append(target)
             continue
 
-        shutil.copy2(source, target)
+        with source.open("rb") as src, target.open("wb") as dst:
+            while True:
+                chunk = src.read(1024 * 64)
+                if not chunk:
+                    break
+                dst.write(chunk)
         created.append(target)
 
     return created, skipped

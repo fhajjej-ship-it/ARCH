@@ -4,6 +4,10 @@
 
 # ARCH
 
+[![Release](https://img.shields.io/github/v/release/fhajjej-ship-it/ARCH?label=release)](https://github.com/fhajjej-ship-it/ARCH/releases)
+[![CI](https://github.com/fhajjej-ship-it/ARCH/actions/workflows/ci.yml/badge.svg)](https://github.com/fhajjej-ship-it/ARCH/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-0ea5a3.svg)](LICENSE)
+
 ARCH is an agent skill for turning a vague software idea into a `context/` folder that Codex, Claude Code, Cursor, and other coding assistants can execute against.
 
 It is not a SaaS or a project generator. It is a pre-build architecture pass: interview the developer, reduce scope to the smallest useful MVP, choose a practical architecture, and write durable context files before implementation starts.
@@ -26,9 +30,20 @@ The output is designed to keep coding agents from improvising product scope, sta
 
 ## Install For Codex
 
-Clone this repo, then copy the skill folder into your Codex skills directory:
+Install the latest release:
 
 ```bash
+git clone --branch v0.1.0 --depth 1 https://github.com/fhajjej-ship-it/ARCH.git
+cd ARCH
+mkdir -p ~/.codex/skills/arch
+cp -R arch/. ~/.codex/skills/arch/
+```
+
+Or update from a local checkout:
+
+```bash
+cd /path/to/ARCH
+git pull
 mkdir -p ~/.codex/skills/arch
 cp -R arch/. ~/.codex/skills/arch/
 ```
@@ -65,6 +80,15 @@ ARCH creates that structure before code generation starts.
 ## Example
 
 See `examples/ghost-ai-context/context/` for an example context folder from a collaborative architecture workspace project.
+
+## Validation And Releases
+
+```bash
+python3 scripts/validate_arch.py
+python3 -m py_compile arch/scripts/bootstrap_context.py scripts/validate_arch.py
+```
+
+ARCH uses semantic versions in `VERSION`, release notes in `RELEASE_NOTES.md`, Git tags like `v0.1.0`, and GitHub Releases. See `docs/release-process.md`.
 
 ## License
 
