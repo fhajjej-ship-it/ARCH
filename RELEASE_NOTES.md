@@ -1,5 +1,28 @@
 # Release Notes
 
+## v0.3.0 - 2026-06-20
+
+Installer release.
+
+### Highlights
+
+- Added `scripts/install_codex_skill.sh` for one-command Codex skill install and update.
+- Supports pinned release installs such as `v0.3.0` and defaults to the latest GitHub release.
+- Backs up an existing `~/.codex/skills/arch` install before replacement.
+- Writes `.arch-version` into the installed skill directory and prints the installed ARCH version.
+- Added offline installer smoke validation through `ARCH_SOURCE_DIR`.
+- Added installer shell syntax checks to CI and release validation.
+
+### Verification
+
+```bash
+python3 scripts/validate_arch.py
+python3 scripts/evaluate_arch.py
+python3 scripts/evaluate_arch.py --write-baseline docs/evals/baseline-results.json
+bash -n scripts/install_codex_skill.sh
+python3 -m py_compile arch/scripts/bootstrap_context.py scripts/validate_arch.py scripts/evaluate_arch.py
+```
+
 ## v0.2.2 - 2026-06-20
 
 Release security release.

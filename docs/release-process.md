@@ -34,6 +34,7 @@ Keep `.github/workflows/ci.yml` pinned to full 40-character commit SHAs.
 python3 scripts/validate_arch.py
 python3 scripts/evaluate_arch.py
 python3 scripts/evaluate_arch.py --write-baseline docs/evals/baseline-results.json
+bash -n scripts/install_codex_skill.sh
 python3 -m py_compile arch/scripts/bootstrap_context.py scripts/validate_arch.py scripts/evaluate_arch.py
 ```
 
@@ -77,8 +78,11 @@ Use the matching section from `RELEASE_NOTES.md` as the notes file content.
 ## Local Install From A Release
 
 ```bash
-git clone --branch v0.2.2 --depth 1 https://github.com/fhajjej-ship-it/ARCH.git
-cd ARCH
-mkdir -p ~/.codex/skills/arch
-cp -R arch/. ~/.codex/skills/arch/
+curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.3.0/scripts/install_codex_skill.sh | bash -s -- v0.3.0
+```
+
+## Local Install From A Checkout
+
+```bash
+ARCH_SOURCE_DIR="$PWD" bash scripts/install_codex_skill.sh
 ```

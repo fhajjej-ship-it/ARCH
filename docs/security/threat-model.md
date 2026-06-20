@@ -11,6 +11,7 @@ In scope:
 - `arch/SKILL.md`
 - `arch/scripts/bootstrap_context.py`
 - `arch/assets/context-template/`
+- `scripts/install_codex_skill.sh`
 - `scripts/validate_arch.py`
 - `scripts/evaluate_arch.py`
 - `.github/workflows/ci.yml`
@@ -82,6 +83,17 @@ Controls:
 
 - `evaluate_arch.py --write-baseline` refuses paths outside the repository.
 - Validation includes a regression check for outside-repo baseline writes.
+
+### T5: Installer update mistake
+
+The installer updates `~/.codex/skills/arch`, so a bad release or partial copy could break the local ARCH skill.
+
+Controls:
+
+- Installer downloads explicit GitHub release tags unless a local `ARCH_SOURCE_DIR` is provided for validation.
+- Existing installs are moved to timestamped backups before replacement.
+- Installer writes `.arch-version` so the installed release is visible.
+- CI runs an offline installer smoke test against the repository checkout.
 
 ## Security Non-Goals
 

@@ -56,6 +56,10 @@ The GitHub Actions workflow pins third-party actions to full commit SHAs instead
 
 `SECURITY.md` defines private vulnerability reporting expectations. `.github/CODEOWNERS` assigns release, workflow, security documentation, and local file-write scripts to the repository owner.
 
+### H5: Installer safety added
+
+`scripts/install_codex_skill.sh` installs ARCH from explicit GitHub release tags, backs up an existing Codex skill directory before replacement, writes `.arch-version`, and supports `ARCH_SOURCE_DIR` for offline CI validation.
+
 ## Release Provenance
 
 ### v0.2.1

@@ -62,7 +62,10 @@ def read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
-def run_arch_command(args: list[str]) -> subprocess.CompletedProcess[str]:
+def run_arch_command(
+    args: list[str],
+    env: dict[str, str] | None = None,
+) -> subprocess.CompletedProcess[str]:
     try:
         return subprocess.run(
             args,
@@ -70,6 +73,7 @@ def run_arch_command(args: list[str]) -> subprocess.CompletedProcess[str]:
             capture_output=True,
             text=True,
             timeout=RUN_TIMEOUT_SECONDS,
+            env=env,
         )
     except subprocess.TimeoutExpired as exc:
         fail(f"Command timed out after {RUN_TIMEOUT_SECONDS}s: {' '.join(args)}")
@@ -275,6 +279,63 @@ def validate_eval_output_path_safety() -> None:
     ok("Eval baseline writes are confined to the repository")
 
 
+def validate_installer() -> None:
+    script = ROOT / "scripts" / "install_codex_skill.sh"
+    if not script.exists():
+        fail("Missing scripts/install_codex_skill.sh")
+    if not os.access(script, os.X_OK):
+        fail("scripts/install_codex_skill.sh must be executable")
+
+    installer_text = script.read_text(encoding="utf-8")
+    for phrase in (
+        "ARCH_INSTALL_DIR",
+        "ARCH_SOURCE_DIR",
+        "backup",
+        ".arch-version",
+        "Restart Codex",
+    ):
+        if phrase not in installer_text:
+            fail(f"Installer missing required behavior phrase: {phrase}")
+
+    syntax = run_arch_command(["bash", "-n", str(script)])
+    if syntax.returncode != 0:
+        fail(f"Installer shell syntax failed:\n{syntax.stderr}")
+
+    version = f"v{read(ROOT / 'VERSION').strip()}"
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp_path = Path(tmp)
+        install_dir = tmp_path / "codex" / "skills" / "arch"
+        env = os.environ.copy()
+        env.update(
+            {
+                "ARCH_INSTALL_DIR": str(install_dir),
+                "ARCH_SOURCE_DIR": str(ROOT),
+                "HOME": str(tmp_path / "home"),
+            }
+        )
+
+        result = run_arch_command(["bash", str(script)], env=env)
+        if result.returncode != 0:
+            fail(f"Installer local-source install failed:\n{result.stderr}\n{result.stdout}")
+        if not (install_dir / "SKILL.md").exists():
+            fail("Installer did not copy SKILL.md")
+        if (install_dir / ".arch-version").read_text(encoding="utf-8").strip() != version:
+            fail("Installer did not write the installed ARCH version")
+
+        marker = install_dir / "old-marker.txt"
+        marker.write_text("previous install", encoding="utf-8")
+        result = run_arch_command(["bash", str(script), version], env=env)
+        if result.returncode != 0:
+            fail(f"Installer update failed:\n{result.stderr}\n{result.stdout}")
+        backup_dirs = sorted(install_dir.parent.glob("arch.backup.*"))
+        if not backup_dirs:
+            fail("Installer did not create a backup for an existing install")
+        if not any((backup / "old-marker.txt").exists() for backup in backup_dirs):
+            fail("Installer backup did not preserve the previous install")
+
+    ok("Codex skill installer is valid")
+
+
 def validate_ci_security() -> None:
     workflow = read(ROOT / ".github" / "workflows" / "ci.yml")
     if re.search(r"(?m)^\s*pull_request_target\s*:", workflow):
@@ -341,6 +402,7 @@ def validate_security_docs() -> None:
     for phrase in (
         "/.github/workflows/ci.yml @fhajjej-ship-it",
         "/arch/scripts/bootstrap_context.py @fhajjej-ship-it",
+        "/scripts/install_codex_skill.sh @fhajjej-ship-it",
         "/scripts/validate_arch.py @fhajjej-ship-it",
     ):
         if phrase not in codeowners:
@@ -348,6 +410,8 @@ def validate_security_docs() -> None:
     release_process = read(ROOT / "docs" / "release-process.md")
     for phrase in (
         "Keep `.github/workflows/ci.yml` pinned to full 40-character commit SHAs.",
+        "bash -n scripts/install_codex_skill.sh",
+        "ARCH_SOURCE_DIR=\"$PWD\" bash scripts/install_codex_skill.sh",
         "git tag -s",
         "Record release provenance",
     ):
@@ -366,6 +430,7 @@ def main() -> int:
     validate_versioning()
     validate_eval_pack()
     validate_eval_output_path_safety()
+    validate_installer()
     validate_ci_security()
     validate_secret_hygiene()
     validate_security_docs()

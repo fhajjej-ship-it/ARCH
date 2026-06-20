@@ -30,5 +30,8 @@ jobs:
       - name: Evaluate ARCH scenarios
         run: python3 scripts/evaluate_arch.py
 
+      - name: Check installer shell syntax
+        run: bash -n scripts/install_codex_skill.sh
+
       - name: Compile Python scripts
         run: python3 -m py_compile arch/scripts/bootstrap_context.py scripts/validate_arch.py scripts/evaluate_arch.py

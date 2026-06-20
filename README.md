@@ -30,25 +30,25 @@ The output is designed to keep coding agents from improvising product scope, sta
 
 ## Install For Codex
 
-Install the latest release:
+Install the pinned release:
 
 ```bash
-git clone --branch v0.2.2 --depth 1 https://github.com/fhajjej-ship-it/ARCH.git
-cd ARCH
-mkdir -p ~/.codex/skills/arch
-cp -R arch/. ~/.codex/skills/arch/
+curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.3.0/scripts/install_codex_skill.sh | bash -s -- v0.3.0
 ```
 
-Or update from a local checkout:
+Update to the latest release using the `v0.3.0` installer:
 
 ```bash
-cd /path/to/ARCH
-git pull
-mkdir -p ~/.codex/skills/arch
-cp -R arch/. ~/.codex/skills/arch/
+curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.3.0/scripts/install_codex_skill.sh | bash
 ```
 
-Restart Codex so the skill is discovered.
+Install from a local checkout while developing ARCH:
+
+```bash
+ARCH_SOURCE_DIR="$PWD" bash scripts/install_codex_skill.sh
+```
+
+The installer backs up any existing `~/.codex/skills/arch` directory, installs the selected release, writes `.arch-version`, and prints the installed ARCH version. Restart Codex so the skill is discovered.
 
 ## Use
 
@@ -94,6 +94,7 @@ ARCH is local-first and should not require secrets. Security docs live in `docs/
 ```bash
 python3 scripts/validate_arch.py
 python3 scripts/evaluate_arch.py
+bash -n scripts/install_codex_skill.sh
 python3 -m py_compile arch/scripts/bootstrap_context.py scripts/validate_arch.py scripts/evaluate_arch.py
 ```
 
