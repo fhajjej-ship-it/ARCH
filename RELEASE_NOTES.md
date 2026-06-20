@@ -1,5 +1,27 @@
 # Release Notes
 
+## v0.4.0 - 2026-06-20
+
+Golden transcript eval release.
+
+### Highlights
+
+- Added `docs/evals/golden-transcripts.json` with ideal ARCH conversations for empty app, existing repo rescue, and AI product starts.
+- Extended `scripts/evaluate_arch.py` to validate golden transcript structure.
+- Transcript evals now enforce one-question-at-a-time flow, exactly three answer options, confirmed decisions, and context-file updates after developer answers.
+- Updated eval documentation to explain when and how to add golden transcripts.
+- Dogfooded the `v0.3.0` installer against the local Codex skill directory before this release.
+
+### Verification
+
+```bash
+python3 scripts/validate_arch.py
+python3 scripts/evaluate_arch.py
+python3 scripts/evaluate_arch.py --write-baseline docs/evals/baseline-results.json
+bash -n scripts/install_codex_skill.sh
+python3 -m py_compile arch/scripts/bootstrap_context.py scripts/validate_arch.py scripts/evaluate_arch.py
+```
+
 ## v0.3.0 - 2026-06-20
 
 Installer release.

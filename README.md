@@ -33,13 +33,13 @@ The output is designed to keep coding agents from improvising product scope, sta
 Install the pinned release:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.3.0/scripts/install_codex_skill.sh | bash -s -- v0.3.0
+curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.4.0/scripts/install_codex_skill.sh | bash -s -- v0.4.0
 ```
 
-Update to the latest release using the `v0.3.0` installer:
+Update to the latest release using the `v0.4.0` installer:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.3.0/scripts/install_codex_skill.sh | bash
+curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.4.0/scripts/install_codex_skill.sh | bash
 ```
 
 Install from a local checkout while developing ARCH:

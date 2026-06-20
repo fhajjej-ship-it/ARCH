@@ -1,0 +1,396 @@
+[
+  {
+    "id": "golden-empty-summer-planner",
+    "scenario_id": "empty-summer-planner",
+    "category": "new_web_app",
+    "title": "Empty repo summer planner interview",
+    "repo_state": "Empty Git repo named Summer app with no README, app files, or context folder.",
+    "prompt": "Use $arch. I want to build a summer app.",
+    "turns": [
+      {
+        "role": "assistant",
+        "kind": "question",
+        "repo_inspection": "Repo inspection: empty Git repo with no app decisions to preserve.",
+        "question": "Question 1/7: What product are we building, and who is the first target user?",
+        "options": [
+          {
+            "label": "Recommended",
+            "text": "A summer planning web app for one friend-group organizer who needs to collect ideas, availability, and decisions in one place."
+          },
+          {
+            "label": "Second option",
+            "text": "A family summer activity planner for one parent coordinating activities, budget, and dates."
+          },
+          {
+            "label": "Other",
+            "text": "Use a different product and target user in one sentence."
+          }
+        ],
+        "why_recommended": "It narrows v1 to one user and one painful coordination job instead of a broad social platform.",
+        "expected_pause": true
+      },
+      {
+        "role": "user",
+        "answer": "1"
+      },
+      {
+        "role": "assistant",
+        "kind": "decision_update",
+        "confirmed_decision": "Product: summer planning web app. First target user: friend-group organizer coordinating ideas, availability, and decisions.",
+        "context_updates": [
+          {
+            "path": "context/project-overview.md",
+            "summary": "Record product, target user, MVP boundary, and early scope cut away from social feed features."
+          },
+          {
+            "path": "context/progress-tracker.md",
+            "summary": "Record confirmed decision and keep remaining architecture questions open."
+          }
+        ],
+        "next_question": {
+          "question": "Question 2/7: What single user action proves v1 is valuable?",
+          "options": [
+            {
+              "label": "Recommended",
+              "text": "Organizer sends one planning link and gets at least three friends to submit availability and vote on one idea."
+            },
+            {
+              "label": "Second option",
+              "text": "Organizer creates a shared trip board with ideas and notes but no voting yet."
+            },
+            {
+              "label": "Other",
+              "text": "Use a different value proof in one sentence."
+            }
+          ],
+          "why_recommended": "It proves coordination value with the smallest measurable loop."
+        }
+      },
+      {
+        "role": "user",
+        "answer": "1"
+      },
+      {
+        "role": "assistant",
+        "kind": "decision_update",
+        "confirmed_decision": "Value proof: one shared planning link produces availability and votes from at least three friends.",
+        "context_updates": [
+          {
+            "path": "context/project-overview.md",
+            "summary": "Add success criteria and the core organizer-to-friend loop."
+          },
+          {
+            "path": "context/feature-specs/01-shared-planning-link.md",
+            "summary": "Draft the first buildable feature around creating and sharing a plan."
+          }
+        ],
+        "next_question": {
+          "question": "Question 3/7: What interface should v1 use?",
+          "options": [
+            {
+              "label": "Recommended",
+              "text": "Responsive web app with organizer and invitee views."
+            },
+            {
+              "label": "Second option",
+              "text": "Single-page static prototype with local mock data."
+            },
+            {
+              "label": "Other",
+              "text": "Use a different interface in one sentence."
+            }
+          ],
+          "why_recommended": "A web app is the smallest shareable surface for group coordination."
+        }
+      }
+    ],
+    "context_expectations": {
+      "context/project-overview.md": [
+        "friend-group organizer",
+        "shared planning link",
+        "availability",
+        "votes"
+      ],
+      "context/progress-tracker.md": [
+        "confirmed decision",
+        "open questions"
+      ],
+      "context/feature-specs/01-shared-planning-link.md": [
+        "create",
+        "share",
+        "verify"
+      ]
+    },
+    "red_flags_absent": [
+      "asks all intake questions at once",
+      "starts coding before confirmed product and value proof",
+      "recommends native mobile before proving the share loop"
+    ]
+  },
+  {
+    "id": "golden-existing-nextjs-saas-rescue",
+    "scenario_id": "existing-nextjs-saas",
+    "category": "existing_repo",
+    "title": "Existing Next.js SaaS rescue interview",
+    "repo_state": "Existing Next.js app with Supabase auth, a Stripe dependency, several unfinished dashboard routes, and no context folder.",
+    "prompt": "Use $arch to inspect this repo and create context so Codex can finish the MVP without drifting.",
+    "turns": [
+      {
+        "role": "assistant",
+        "kind": "question",
+        "repo_inspection": "Repo inspection: existing Next.js/Supabase app with unfinished dashboard routes and no context folder.",
+        "question": "Question 1/6: Which user workflow should Codex finish first?",
+        "options": [
+          {
+            "label": "Recommended",
+            "text": "Support manager reviews new escalations, assigns an owner, and marks one escalation resolved."
+          },
+          {
+            "label": "Second option",
+            "text": "Admin configures organization settings and team roles."
+          },
+          {
+            "label": "Other",
+            "text": "Use a different first workflow in one sentence."
+          }
+        ],
+        "why_recommended": "It finishes one operational loop and delays admin surface area until the core value is proven.",
+        "expected_pause": true
+      },
+      {
+        "role": "user",
+        "answer": "1"
+      },
+      {
+        "role": "assistant",
+        "kind": "decision_update",
+        "confirmed_decision": "First workflow: support manager reviews, assigns, and resolves an escalation.",
+        "context_updates": [
+          {
+            "path": "context/project-overview.md",
+            "summary": "Record MVP workflow, target user, and scope cuts for admin settings and broad dashboards."
+          },
+          {
+            "path": "context/architecture-context.md",
+            "summary": "Preserve existing Next.js and Supabase decisions instead of recommending a rewrite."
+          },
+          {
+            "path": "context/progress-tracker.md",
+            "summary": "Record current phase as repo rescue and next decision as data boundaries."
+          }
+        ],
+        "next_question": {
+          "question": "Question 2/6: What data must be real for this workflow?",
+          "options": [
+            {
+              "label": "Recommended",
+              "text": "Real Supabase escalation records with status, owner, priority, customer, and audit timestamps."
+            },
+            {
+              "label": "Second option",
+              "text": "Mock escalation records in code while finishing UI flow first."
+            },
+            {
+              "label": "Other",
+              "text": "Use a different data boundary in one sentence."
+            }
+          ],
+          "why_recommended": "This workflow is only valuable if assignments and status changes persist."
+        }
+      },
+      {
+        "role": "user",
+        "answer": "1"
+      },
+      {
+        "role": "assistant",
+        "kind": "decision_update",
+        "confirmed_decision": "Escalations are real Supabase records with status, owner, priority, customer, and audit timestamps.",
+        "context_updates": [
+          {
+            "path": "context/architecture-context.md",
+            "summary": "Define escalation table fields, server-side validation, and Supabase access boundary."
+          },
+          {
+            "path": "context/feature-specs/01-escalation-resolution-loop.md",
+            "summary": "Create the buildable implementation unit for list, assign, resolve, and verify."
+          }
+        ],
+        "next_question": {
+          "question": "Question 3/6: What should happen to billing in v1?",
+          "options": [
+            {
+              "label": "Recommended",
+              "text": "Keep Stripe dependency untouched and manually manage access until the resolution loop works."
+            },
+            {
+              "label": "Second option",
+              "text": "Wire a basic Stripe checkout before finishing the operational workflow."
+            },
+            {
+              "label": "Other",
+              "text": "Use a different billing decision in one sentence."
+            }
+          ],
+          "why_recommended": "Billing is premature until the core support workflow proves value."
+        }
+      }
+    ],
+    "context_expectations": {
+      "context/project-overview.md": [
+        "support manager",
+        "escalation",
+        "resolve",
+        "scope cuts"
+      ],
+      "context/architecture-context.md": [
+        "Next.js",
+        "Supabase",
+        "server-side validation"
+      ],
+      "context/feature-specs/01-escalation-resolution-loop.md": [
+        "assign",
+        "resolve",
+        "verify"
+      ]
+    },
+    "red_flags_absent": [
+      "recommends rewriting the existing stack",
+      "prioritizes billing before the core workflow",
+      "creates context without preserving existing repo decisions"
+    ]
+  },
+  {
+    "id": "golden-ai-founder-spec-tool",
+    "scenario_id": "ai-founder-spec-tool",
+    "category": "ai_product",
+    "title": "AI founder spec generator interview",
+    "repo_state": "New product repo with only the prompt idea and no implementation files.",
+    "prompt": "Use $arch. Build a product where founders turn messy startup ideas into specs AI coding agents can implement.",
+    "turns": [
+      {
+        "role": "assistant",
+        "kind": "question",
+        "repo_inspection": "Repo inspection: no existing product or stack decisions, so v1 can be scoped from first principles.",
+        "question": "Question 1/7: Who is the first user and what output must they trust?",
+        "options": [
+          {
+            "label": "Recommended",
+            "text": "Solo founder with a messy idea who needs one implementation-ready feature spec for Codex."
+          },
+          {
+            "label": "Second option",
+            "text": "Startup team that needs a full PRD, roadmap, and investor-facing strategy doc."
+          },
+          {
+            "label": "Other",
+            "text": "Use a different first user and trusted output in one sentence."
+          }
+        ],
+        "why_recommended": "One founder and one buildable spec is easier to verify than a broad strategy platform.",
+        "expected_pause": true
+      },
+      {
+        "role": "user",
+        "answer": "1"
+      },
+      {
+        "role": "assistant",
+        "kind": "decision_update",
+        "confirmed_decision": "First user: solo founder. Trusted output: one implementation-ready feature spec for Codex.",
+        "context_updates": [
+          {
+            "path": "context/project-overview.md",
+            "summary": "Record user, outcome, MVP boundary, and scope cut away from roadmap and investor docs."
+          },
+          {
+            "path": "context/ai-workflow-rules.md",
+            "summary": "Record that generated specs must be small enough for a coding assistant to execute."
+          }
+        ],
+        "next_question": {
+          "question": "Question 2/7: What should the AI do in v1?",
+          "options": [
+            {
+              "label": "Recommended",
+              "text": "Ask clarifying questions, extract decisions, and draft one feature spec with assumptions and verification steps."
+            },
+            {
+              "label": "Second option",
+              "text": "Generate a full product plan, architecture, backlog, and launch copy in one pass."
+            },
+            {
+              "label": "Other",
+              "text": "Use a different AI boundary in one sentence."
+            }
+          ],
+          "why_recommended": "A constrained AI workflow is easier to review and safer than one-shot product generation."
+        }
+      },
+      {
+        "role": "user",
+        "answer": "1"
+      },
+      {
+        "role": "assistant",
+        "kind": "decision_update",
+        "confirmed_decision": "AI boundary: clarify, extract decisions, and draft one feature spec with assumptions and verification steps.",
+        "context_updates": [
+          {
+            "path": "context/architecture-context.md",
+            "summary": "Define AI as a server-side drafting workflow with persisted inputs, outputs, and review state."
+          },
+          {
+            "path": "context/feature-specs/01-idea-to-feature-spec.md",
+            "summary": "Create the first buildable unit from idea intake to reviewed feature spec."
+          }
+        ],
+        "next_question": {
+          "question": "Question 3/7: What data and privacy boundary should v1 use?",
+          "options": [
+            {
+              "label": "Recommended",
+              "text": "Store idea text, extracted decisions, generated spec, and user-owned project records; do not train on user content."
+            },
+            {
+              "label": "Second option",
+              "text": "Keep everything local in browser storage for a prototype."
+            },
+            {
+              "label": "Other",
+              "text": "Use a different data and privacy boundary in one sentence."
+            }
+          ],
+          "why_recommended": "Founders need persistence and trust, while the no-training rule keeps the security boundary clear."
+        }
+      }
+    ],
+    "context_expectations": {
+      "context/project-overview.md": [
+        "solo founder",
+        "implementation-ready",
+        "feature spec"
+      ],
+      "context/architecture-context.md": [
+        "server-side",
+        "AI",
+        "review state"
+      ],
+      "context/ai-workflow-rules.md": [
+        "coding assistant",
+        "assumptions",
+        "verification"
+      ],
+      "context/feature-specs/01-idea-to-feature-spec.md": [
+        "intake",
+        "generated spec",
+        "review"
+      ]
+    },
+    "red_flags_absent": [
+      "one-shot full product generation",
+      "unclear privacy boundary",
+      "feature spec too large for a coding assistant"
+    ]
+  }
+]

@@ -16,6 +16,19 @@ python3 scripts/evaluate_arch.py
 
 This is a static eval. It validates the scenario catalog, the expected 3-option interview shape, context-writing expectations, and the installed skill instructions. It does not call a model.
 
+## Golden Transcripts
+
+`golden-transcripts.json` contains ideal short ARCH conversations for representative project starts. These are not generated at test time. They are reviewable fixtures that lock the expected behavior:
+
+- inspect the repo before asking
+- ask one decision question at a time
+- give exactly three answer options
+- wait for the developer's answer
+- turn each confirmed answer into concrete `context/` updates
+- ask the next single question only after recording the decision
+
+The evaluator checks the transcript structure and fails the release if a golden transcript drifts away from that contract.
+
 ## Scenario Workflow
 
 For manual forward testing:
@@ -52,3 +65,5 @@ Add a scenario when ARCH fails in a new way. Keep scenarios realistic and short.
 - confirmed answer flow
 - expected context updates
 - red flags
+
+Add a golden transcript when a scenario needs a concrete example of ideal assistant behavior. Keep transcripts short, focused, and tied to a `scenario_id` in `scenarios.json`.

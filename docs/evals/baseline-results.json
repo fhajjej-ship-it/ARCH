@@ -1,7 +1,8 @@
 {
-  "version": "0.3.0",
-  "generated_at": "2026-06-20T13:38:13.108479+00:00",
+  "version": "0.4.0",
+  "generated_at": "2026-06-20T14:02:47.173953+00:00",
   "scenario_count": 7,
+  "golden_transcript_count": 3,
   "passed": true,
   "score": 1.0,
   "results": [
@@ -44,6 +45,26 @@
     {
       "id": "health-advice-app",
       "category": "regulated_risk",
+      "score": 1.0,
+      "issues": []
+    }
+  ],
+  "golden_transcript_results": [
+    {
+      "id": "golden-empty-summer-planner",
+      "scenario_id": "empty-summer-planner",
+      "score": 1.0,
+      "issues": []
+    },
+    {
+      "id": "golden-existing-nextjs-saas-rescue",
+      "scenario_id": "existing-nextjs-saas",
+      "score": 1.0,
+      "issues": []
+    },
+    {
+      "id": "golden-ai-founder-spec-tool",
+      "scenario_id": "ai-founder-spec-tool",
       "score": 1.0,
       "issues": []
     }

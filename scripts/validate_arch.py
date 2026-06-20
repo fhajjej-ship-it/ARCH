@@ -256,6 +256,7 @@ def validate_eval_pack() -> None:
     required_paths = [
         ROOT / "docs" / "evals" / "README.md",
         ROOT / "docs" / "evals" / "scenarios.json",
+        ROOT / "docs" / "evals" / "golden-transcripts.json",
         ROOT / "docs" / "evals" / "baseline-results.json",
         ROOT / "scripts" / "evaluate_arch.py",
     ]
