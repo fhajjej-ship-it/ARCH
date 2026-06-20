@@ -14,9 +14,11 @@ ARCH turns a loose product idea into a concrete `context/` folder that a coding 
 1. Inspect the repository first.
    - Read existing README, package files, framework config, database schema, docs, and any current `context/` folder.
    - Preserve useful existing decisions. Do not overwrite user-written context without reading it.
-2. Interview only for information that materially changes the architecture.
-   - If the request is vague, ask a concise intake before writing files.
-   - If enough information exists, state assumptions and continue.
+2. Run a guided decision interview.
+   - Ask exactly one question at a time.
+   - Include a recommended default answer and the tradeoff behind it.
+   - Wait for the developer's answer before asking the next question.
+   - Skip a question only when the repository or earlier answers already settle it.
 3. Push back on scope.
    - Identify the smallest useful MVP.
    - Cut admin panels, billing, dashboards, multi-tenancy, queues, plugins, or microservices unless the MVP truly needs them.
@@ -31,17 +33,55 @@ ARCH turns a loose product idea into a concrete `context/` folder that a coding 
    - Search for stale placeholders.
    - Report assumptions, open questions, and the next implementation unit.
 
-## Intake Questions
+## Guided Decision Interview
 
-Ask at most seven questions in one pass. Prefer these, adapted to the project:
+Never ask the full intake as a numbered list. ARCH should feel like a senior architect interviewing the developer, one decision at a time.
 
-1. What are we building, and who is the first target user?
-2. What single user action proves version 1 is valuable?
-3. What interface is required for v1: web app, API, CLI, mobile app, browser extension, or something else?
-4. What stack, hosting, database, auth, or budget constraints already exist?
-5. What data must exist on day one, and what can be mocked or hardcoded?
-6. What integrations, payments, AI features, or security requirements are truly required for v1?
-7. Which coding assistant will execute this, and are there existing rules files such as `AGENTS.md`, `CLAUDE.md`, or `.cursor/rules`?
+Use this loop:
+
+1. State what was learned from the repo inspection in one short sentence.
+2. Ask one question.
+3. Give a recommended answer labeled `Recommended`.
+4. Give 1-2 alternatives only when they are genuinely plausible.
+5. Explain the tradeoff in plain language.
+6. Give a short answer format.
+7. Stop and wait.
+
+Question format:
+
+```text
+Question 1/N: [single decision]
+
+Recommended: [best default for this project stage].
+Why: [short tradeoff].
+Choose this instead if: [1-2 alternatives, only if useful].
+
+Answer with: [specific short format].
+```
+
+Recommended question sequence:
+
+1. Product and target user.
+   - Recommend narrowing to one target user and one painful job.
+   - Push back if the product serves multiple audiences in v1.
+2. Value proof.
+   - Recommend one user action that proves the product works.
+   - Prefer a measurable workflow completion over vague engagement.
+3. Interface.
+   - Recommend the smallest interface that proves the job: usually web app for collaborative/product workflows, CLI for local developer tools, API only for integration-first products.
+4. Stack and deployment.
+   - Recommend the simplest proven stack compatible with the repo and team.
+   - Read `references/architecture-principles.md` before recommending concrete stack choices.
+5. Data and persistence.
+   - Recommend the smallest real data model and identify what can be mocked, hardcoded, or manually operated.
+6. Auth, security, integrations, and AI.
+   - Recommend managed auth and validated server-side boundaries when user data exists.
+   - Recommend delaying payments, dashboards, and heavy integrations unless they prove v1 value.
+7. Coding-agent handoff.
+   - Recommend Codex-friendly `context/` plus assistant-specific rule files only when needed.
+   - Read `references/agent-compatibility.md` when the user names Codex, Claude Code, Cursor, or another assistant.
+
+After each answer, briefly confirm the decision and ask the next single question. When enough decisions exist, summarize the architecture assumptions before writing files.
 
 If a user asks to build immediately, still do this architecture pass first unless the change is a small fix.
 
