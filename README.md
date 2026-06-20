@@ -8,7 +8,7 @@ ARCH is an agent skill for turning a vague software idea into a `context/` folde
 
 It is not a SaaS or a project generator. It is a pre-build architecture pass: interview the developer, reduce scope to the smallest useful MVP, choose a practical architecture, and write durable context files before implementation starts.
 
-ARCH asks one decision question at a time. Each question includes a recommended default, the tradeoff, and a short answer format so the developer is not left to design the architecture alone.
+ARCH asks one decision question at a time. Each question includes a recommended default, the tradeoff, and a short answer format so the developer is not left to design the architecture alone. When the developer answers or confirms the recommendation, ARCH records that decision in `context/` and keeps going.
 
 ## What It Creates
 

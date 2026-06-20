@@ -18,13 +18,16 @@ ARCH turns a loose product idea into a concrete `context/` folder that a coding 
    - Ask exactly one question at a time.
    - Include a recommended default answer and the tradeoff behind it.
    - Wait for the developer's answer before asking the next question.
+   - Treat "yes", "use recommended", "confirm", or an explicit answer as a confirmed architecture decision.
    - Skip a question only when the repository or earlier answers already settle it.
 3. Push back on scope.
    - Identify the smallest useful MVP.
    - Cut admin panels, billing, dashboards, multi-tenancy, queues, plugins, or microservices unless the MVP truly needs them.
 4. Create or update `context/`.
    - Use `scripts/bootstrap_context.py` to create missing files from `assets/context-template/`.
-   - Then edit the files so they are project-specific and executable. Do not leave template placeholders.
+   - Convert confirmed decisions into project-specific context files. Do not leave confirmed decisions only in chat.
+   - Update affected context files after each confirmed decision once the folder exists.
+   - Do not leave template placeholders.
 5. Split the work into feature specs.
    - Each feature spec should be independently buildable and verifiable.
    - Keep feature specs small enough for a coding assistant to finish in one focused pass.
@@ -84,6 +87,30 @@ Recommended question sequence:
 After each answer, briefly confirm the decision and ask the next single question. When enough decisions exist, summarize the architecture assumptions before writing files.
 
 If a user asks to build immediately, still do this architecture pass first unless the change is a small fix.
+
+## Confirmed Decisions To Context
+
+ARCH exists to write durable project context, not just to advise in chat.
+
+Use these rules:
+
+1. Treat the developer's answer as the source of truth.
+   - If they accept the recommendation, record the recommended decision.
+   - If they override it, record their decision and adjust later recommendations around it.
+   - If their answer conflicts with an earlier decision, ask one clarifying question before writing contradictory context.
+2. Create `context/` as soon as there is enough confirmed information for a useful draft.
+   - For empty repos, this usually means product, target user, value proof, and interface are confirmed.
+   - For existing repos, bootstrap missing files immediately after inspection, then update only files affected by confirmed decisions.
+3. After each confirmed decision, update the relevant context file.
+   - Product, target user, MVP, value proof, and scope cuts go in `project-overview.md`.
+   - Stack, data, auth, integrations, deployment, and invariants go in `architecture-context.md`.
+   - Screens, states, navigation, responsiveness, accessibility, and visual rules go in `ui-context.md`.
+   - Implementation rules, validation, tests, dependency policy, and file organization go in `code-standards.md`.
+   - Agent execution rules and context update rules go in `ai-workflow-rules.md`.
+   - Phase, next task, open questions, and decisions go in `progress-tracker.md`.
+   - Buildable units go in `feature-specs/*.md`.
+4. After writing, briefly tell the developer which files changed and ask the next single question.
+5. Do not wait for a perfect brief. Put unresolved but important decisions in `progress-tracker.md` under Open Questions.
 
 ## Context Folder Contract
 
