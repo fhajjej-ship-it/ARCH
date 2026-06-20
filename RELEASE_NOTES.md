@@ -1,5 +1,23 @@
 # Release Notes
 
+## v0.1.1 - 2026-06-20
+
+Question usability release.
+
+### Highlights
+
+- Changed ARCH interview questions to use exactly three answer options.
+- Made option 1 the recommended default, option 2 the strongest alternative, and option 3 a free-form "Other" answer.
+- Updated decision recording rules so numeric answers map directly to confirmed context decisions.
+- Updated install docs to pin the latest release tag.
+
+### Verification
+
+```bash
+python3 scripts/validate_arch.py
+python3 -m py_compile arch/scripts/bootstrap_context.py scripts/validate_arch.py
+```
+
 ## v0.1.0 - 2026-06-20
 
 Initial public release of ARCH.

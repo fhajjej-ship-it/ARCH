@@ -44,23 +44,28 @@ Use this loop:
 
 1. State what was learned from the repo inspection in one short sentence.
 2. Ask one question.
-3. Give a recommended answer labeled `Recommended`.
-4. Give 1-2 alternatives only when they are genuinely plausible.
-5. Explain the tradeoff in plain language.
-6. Give a short answer format.
-7. Stop and wait.
+3. Give exactly three answer options.
+4. Make option 1 the recommended default.
+5. Make option 2 the strongest reasonable alternative.
+6. Make option 3 `Other`, for a free-form answer.
+7. Explain the tradeoff in one short sentence.
+8. Stop and wait.
 
 Question format:
 
 ```text
 Question 1/N: [single decision]
 
-Recommended: [best default for this project stage].
-Why: [short tradeoff].
-Choose this instead if: [1-2 alternatives, only if useful].
+1. Recommended: [best default for this project stage].
+2. Second option: [strongest reasonable alternative].
+3. Other: [free-form answer].
 
-Answer with: [specific short format].
+Why I recommend 1: [short tradeoff].
+
+Reply with 1, 2, or 3. If 3, write your answer in one sentence.
 ```
+
+Keep options easy to select. Do not make the developer write a structured answer unless they choose `Other`.
 
 Recommended question sequence:
 
@@ -95,8 +100,11 @@ ARCH exists to write durable project context, not just to advise in chat.
 Use these rules:
 
 1. Treat the developer's answer as the source of truth.
-   - If they accept the recommendation, record the recommended decision.
-   - If they override it, record their decision and adjust later recommendations around it.
+   - If they answer `1`, "yes", "use recommended", or "confirm", record option 1.
+   - If they answer `2`, record option 2.
+   - If they answer `3` with text, record the free-form decision.
+   - If they answer only `3`, ask one short follow-up for the free-form answer.
+   - If they override the options, record their decision and adjust later recommendations around it.
    - If their answer conflicts with an earlier decision, ask one clarifying question before writing contradictory context.
 2. Create `context/` as soon as there is enough confirmed information for a useful draft.
    - For empty repos, this usually means product, target user, value proof, and interface are confirmed.

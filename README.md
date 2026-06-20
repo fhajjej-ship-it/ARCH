@@ -12,7 +12,7 @@ ARCH is an agent skill for turning a vague software idea into a `context/` folde
 
 It is not a SaaS or a project generator. It is a pre-build architecture pass: interview the developer, reduce scope to the smallest useful MVP, choose a practical architecture, and write durable context files before implementation starts.
 
-ARCH asks one decision question at a time. Each question includes a recommended default, the tradeoff, and a short answer format so the developer is not left to design the architecture alone. When the developer answers or confirms the recommendation, ARCH records that decision in `context/` and keeps going.
+ARCH asks one decision question at a time. Each question gives three easy choices: `1. Recommended`, `2. Second option`, and `3. Other`. When the developer answers or confirms a choice, ARCH records that decision in `context/` and keeps going.
 
 ## What It Creates
 
@@ -33,7 +33,7 @@ The output is designed to keep coding agents from improvising product scope, sta
 Install the latest release:
 
 ```bash
-git clone --branch v0.1.0 --depth 1 https://github.com/fhajjej-ship-it/ARCH.git
+git clone --branch v0.1.1 --depth 1 https://github.com/fhajjej-ship-it/ARCH.git
 cd ARCH
 mkdir -p ~/.codex/skills/arch
 cp -R arch/. ~/.codex/skills/arch/

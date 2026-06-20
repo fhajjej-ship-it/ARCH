@@ -73,6 +73,10 @@ def validate_skill() -> None:
         "confirmed architecture decision",
         "Do not leave confirmed decisions only in chat",
         "After each confirmed decision",
+        "1. Recommended",
+        "2. Second option",
+        "3. Other",
+        "Reply with 1, 2, or 3",
     ]
     missing = [phrase for phrase in required_phrases if phrase not in skill_text]
     if missing:
