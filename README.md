@@ -33,7 +33,7 @@ The output is designed to keep coding agents from improvising product scope, sta
 Install the latest release:
 
 ```bash
-git clone --branch v0.2.0 --depth 1 https://github.com/fhajjej-ship-it/ARCH.git
+git clone --branch v0.2.1 --depth 1 https://github.com/fhajjej-ship-it/ARCH.git
 cd ARCH
 mkdir -p ~/.codex/skills/arch
 cp -R arch/. ~/.codex/skills/arch/
@@ -84,6 +84,10 @@ See `examples/ghost-ai-context/context/` for an example context folder from a co
 ## Eval Pack
 
 ARCH includes a static eval pack in `docs/evals/` with realistic project scenarios for new apps, existing repos, AI products, CLIs, mobile apps, ops tools, and regulated-risk ideas. Use it before releases to check the 3-option interview and context-writing workflow.
+
+## Security
+
+ARCH is local-first and should not require secrets. Security docs live in `docs/security/`, including the current threat model and security review. Validation checks for linked-file write escapes, high-confidence committed secrets, constrained CI permissions, and eval output paths that leave the repository.
 
 ## Validation And Releases
 

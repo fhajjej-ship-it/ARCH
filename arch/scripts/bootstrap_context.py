@@ -4,7 +4,70 @@
 from __future__ import annotations
 
 import argparse
+import os
 from pathlib import Path
+
+
+COPY_CHUNK_SIZE = 64 * 1024
+
+
+def reject_symlink_components(path: Path, root: Path) -> None:
+    """Refuse to operate through symlinks inside the target project."""
+    relative_parts = path.relative_to(root).parts
+    current = root
+    for part in relative_parts:
+        current = current / part
+        if current.is_symlink():
+            raise RuntimeError(f"Refusing to write through symlink: {current}")
+
+
+def open_new_file_for_write(target: Path) -> object:
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
+    nofollow = getattr(os, "O_NOFOLLOW", 0)
+    if nofollow:
+        flags |= nofollow
+    try:
+        fd = os.open(target, flags, 0o644)
+    except OSError as exc:
+        if target.is_symlink():
+            raise RuntimeError(f"Refusing to overwrite symlink: {target}") from exc
+        raise
+    return os.fdopen(fd, "wb")
+
+
+def write_template_file(source: Path, target: Path, force: bool) -> None:
+    temp_path: Path | None = None
+    for attempt in range(100):
+        candidate = target.with_name(f".{target.name}.tmp.{os.getpid()}.{attempt}")
+        try:
+            dst = open_new_file_for_write(candidate)
+        except FileExistsError:
+            continue
+        temp_path = candidate
+        break
+    else:
+        raise RuntimeError(f"Could not create temporary file near: {target}")
+
+    try:
+        with dst:
+            src = source.open("rb")
+            with src:
+                while True:
+                    chunk = src.read(COPY_CHUNK_SIZE)
+                    if not chunk:
+                        break
+                    dst.write(chunk)
+
+        if not force and (target.exists() or target.is_symlink()):
+            raise RuntimeError(f"Refusing to overwrite existing file: {target}")
+        os.replace(temp_path, target)
+        temp_path = None
+    finally:
+        if temp_path is not None:
+            try:
+                temp_path.unlink()
+            except FileNotFoundError:
+                pass
 
 
 def copy_templates(project_path: Path, force: bool) -> tuple[list[Path], list[Path]]:
@@ -23,18 +86,15 @@ def copy_templates(project_path: Path, force: bool) -> tuple[list[Path], list[Pa
 
         relative_path = source.relative_to(template_dir)
         target = target_context / relative_path
+        reject_symlink_components(target.parent, project_path)
         target.parent.mkdir(parents=True, exist_ok=True)
+        reject_symlink_components(target, project_path)
 
         if target.exists() and not force:
             skipped.append(target)
             continue
 
-        with source.open("rb") as src, target.open("wb") as dst:
-            while True:
-                chunk = src.read(1024 * 64)
-                if not chunk:
-                    break
-                dst.write(chunk)
+        write_template_file(source, target, force)
         created.append(target)
 
     return created, skipped
@@ -63,7 +123,10 @@ def main() -> int:
     if not project_path.is_dir():
         parser.error(f"Project path is not a directory: {project_path}")
 
-    created, skipped = copy_templates(project_path, args.force)
+    try:
+        created, skipped = copy_templates(project_path, args.force)
+    except RuntimeError as exc:
+        parser.error(str(exc))
 
     print(f"Project: {project_path}")
     print(f"Created/updated: {len(created)}")

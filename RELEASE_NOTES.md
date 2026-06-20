@@ -1,5 +1,26 @@
 # Release Notes
 
+## v0.2.1 - 2026-06-20
+
+Security hardening release.
+
+### Highlights
+
+- Hardened `bootstrap_context.py` so ARCH refuses to write through symlinked `context/` paths and avoids truncating hardlinked files during `--force`.
+- Added validator regression coverage for linked-file write escapes and outside-repo eval baseline writes.
+- Constrained CI workflow permissions to read-only repository contents.
+- Added high-confidence committed-secret checks to local and CI validation.
+- Added security documentation with a threat model and review notes.
+
+### Verification
+
+```bash
+python3 scripts/validate_arch.py
+python3 scripts/evaluate_arch.py
+python3 scripts/evaluate_arch.py --write-baseline docs/evals/baseline-results.json
+python3 -m py_compile arch/scripts/bootstrap_context.py scripts/validate_arch.py scripts/evaluate_arch.py
+```
+
 ## v0.2.0 - 2026-06-20
 
 Evaluation loop release.

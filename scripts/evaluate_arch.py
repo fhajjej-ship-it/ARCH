@@ -46,6 +46,18 @@ def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def resolve_repo_output_path(path: Path) -> Path:
+    output_path = path.expanduser()
+    if not output_path.is_absolute():
+        output_path = ROOT / output_path
+    resolved = output_path.resolve()
+    try:
+        resolved.relative_to(ROOT)
+    except ValueError:
+        fail(f"Refusing to write outside repository: {resolved}")
+    return resolved
+
+
 def require(condition: bool, message: str) -> None:
     if not condition:
         fail(message)
@@ -218,9 +230,7 @@ def main() -> int:
 
     summary = evaluate()
     if args.write_baseline:
-        output_path = args.write_baseline
-        if not output_path.is_absolute():
-            output_path = ROOT / output_path
+        output_path = resolve_repo_output_path(args.write_baseline)
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
         ok(f"Wrote baseline: {output_path.relative_to(ROOT)}")

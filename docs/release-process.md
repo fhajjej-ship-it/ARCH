@@ -47,7 +47,7 @@ Use the matching section from `RELEASE_NOTES.md` as the notes file content.
 ## Local Install From A Release
 
 ```bash
-git clone --branch v0.1.0 --depth 1 https://github.com/fhajjej-ship-it/ARCH.git
+git clone --branch v0.2.1 --depth 1 https://github.com/fhajjej-ship-it/ARCH.git
 cd ARCH
 mkdir -p ~/.codex/skills/arch
 cp -R arch/. ~/.codex/skills/arch/
