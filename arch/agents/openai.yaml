@@ -1,0 +1,7 @@
+interface:
+  display_name: "ARCH"
+  short_description: "Architect projects for AI coding agents"
+  icon_small: "./assets/logo-small.png"
+  icon_large: "./assets/logo.svg"
+  brand_color: "#231F20"
+  default_prompt: "Use $arch to interview me about this project and create or update the context folder."
