@@ -52,21 +52,28 @@ Use this loop:
 7. Explain the tradeoff in one short sentence.
 8. Stop and wait.
 
-Question format:
+Use this compact question layout:
 
 ```text
-Question 1/N: [single decision]
+**Question 1/N**
+[single decision]
 
-1. Recommended: [best default for this project stage].
-2. Second option: [strongest reasonable alternative].
-3. Other: [free-form answer].
+**1. Recommended**
+[best default for this project stage].
 
-Why I recommend 1: [short tradeoff].
+**2. Second option**
+[strongest reasonable alternative].
 
-Reply with 1, 2, or 3. If 3, write your answer in one sentence.
+**3. Other**
+[free-form answer].
+
+**Why I recommend 1**
+[short tradeoff].
+
+**Reply:** `1`, `2`, or `3`. If `3`, write your answer in one sentence.
 ```
 
-Keep options easy to select. Do not make the developer write a structured answer unless they choose `Other`.
+Keep options easy to select. Put each option label on its own bold line, keep each option body to one short sentence, and leave one blank line between blocks. Do not use tables for question options because they wrap poorly in chat. Do not make the developer write a structured answer unless they choose `Other`.
 
 Recommended question sequence:
 

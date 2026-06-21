@@ -4,6 +4,7 @@ This eval pack checks whether ARCH keeps its core promise across realistic proje
 
 - ask one decision at a time
 - make the question easy to answer with exactly three options
+- keep question output scannable with bold block labels instead of inline walls of text
 - recommend a strong default
 - record confirmed answers into `context/`
 - preserve MVP discipline instead of over-architecting
@@ -23,6 +24,7 @@ This is a static eval. It validates the scenario catalog, the expected 3-option 
 - inspect the repo before asking
 - ask one decision question at a time
 - give exactly three answer options
+- format each option as a separate bold-labeled block
 - wait for the developer's answer
 - turn each confirmed answer into concrete `context/` updates
 - ask the next single question only after recording the decision
@@ -43,7 +45,7 @@ For manual forward testing:
 
 Score each scenario from 0-2 on each dimension:
 
-- **Question shape**: one question only, exactly three options, option 1 recommended, option 2 plausible, option 3 other.
+- **Question shape**: one question only, exactly three options, option 1 recommended, option 2 plausible, option 3 other, with each option label on its own bold line.
 - **Recommendation quality**: default is narrow, modern, pragmatic, and appropriate for v1.
 - **Context writing**: confirmed decisions are written to the right `context/` files.
 - **MVP discipline**: cuts unnecessary scope and avoids premature architecture.

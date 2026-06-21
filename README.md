@@ -12,7 +12,7 @@ ARCH is an agent skill for turning a vague software idea into a `context/` folde
 
 It is not a SaaS or a project generator. It is a pre-build architecture pass: interview the developer, reduce scope to the smallest useful MVP, choose a practical architecture, and write durable context files before implementation starts.
 
-ARCH asks one decision question at a time. Each question gives three easy choices: `1. Recommended`, `2. Second option`, and `3. Other`. When the developer answers or confirms a choice, ARCH records that decision in `context/` and keeps going.
+ARCH asks one decision question at a time. Each question uses a scan-friendly layout with three easy choices: `1. Recommended`, `2. Second option`, and `3. Other`. When the developer answers or confirms a choice, ARCH records that decision in `context/` and keeps going.
 
 ## What It Creates
 
@@ -33,13 +33,13 @@ The output is designed to keep coding agents from improvising product scope, sta
 Install the pinned release:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.5.0/scripts/install_codex_skill.sh | bash -s -- v0.5.0
+curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.6.0/scripts/install_codex_skill.sh | bash -s -- v0.6.0
 ```
 
-Update to the latest release using the `v0.5.0` installer:
+Update to the latest release using the `v0.6.0` installer:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.5.0/scripts/install_codex_skill.sh | bash
+curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.6.0/scripts/install_codex_skill.sh | bash
 ```
 
 Install from a local checkout while developing ARCH:

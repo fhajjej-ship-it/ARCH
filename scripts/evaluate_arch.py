@@ -310,7 +310,13 @@ def validate_skill_contract() -> None:
         "Make option 1 the recommended default",
         "Make option 2 the strongest reasonable alternative",
         "Make option 3 `Other`",
-        "Reply with 1, 2, or 3",
+        "Use this compact question layout",
+        "**1. Recommended**",
+        "**2. Second option**",
+        "**3. Other**",
+        "**Reply:** `1`, `2`, or `3`",
+        "Put each option label on its own bold line",
+        "Do not use tables for question options",
         "After each confirmed decision, update the relevant context file",
     ]
     missing = [phrase for phrase in required_phrases if phrase not in skill_text]

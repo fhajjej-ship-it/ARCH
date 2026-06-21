@@ -78,7 +78,7 @@ Use the matching section from `RELEASE_NOTES.md` as the notes file content.
 ## Local Install From A Release
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.5.0/scripts/install_codex_skill.sh | bash -s -- v0.5.0
+curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.6.0/scripts/install_codex_skill.sh | bash -s -- v0.6.0
 ```
 
 ## Local Install From A Checkout

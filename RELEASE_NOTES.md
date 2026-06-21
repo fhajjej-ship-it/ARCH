@@ -1,5 +1,26 @@
 # Release Notes
 
+## v0.6.0 - 2026-06-21
+
+Question layout release.
+
+### Highlights
+
+- Updated the ARCH question template to use compact bold-labeled blocks instead of dense inline option paragraphs.
+- Added validation and eval checks that enforce the block layout, 3-option choices, and numeric reply contract.
+- Updated eval documentation and installer examples for the new release.
+- Kept the answer flow unchanged: developers can still reply with `1`, `2`, or `3`.
+
+### Verification
+
+```bash
+python3 scripts/validate_arch.py
+python3 scripts/evaluate_arch.py
+python3 scripts/evaluate_arch.py --write-baseline docs/evals/baseline-results.json
+bash -n scripts/install_codex_skill.sh
+python3 -m py_compile arch/scripts/bootstrap_context.py arch/scripts/validate_context.py scripts/validate_arch.py scripts/evaluate_arch.py
+```
+
 ## v0.5.0 - 2026-06-21
 
 Context doctor release.
