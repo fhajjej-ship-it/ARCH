@@ -11,6 +11,7 @@
 /docs/release-process.md @fhajjej-ship-it
 /docs/security/ @fhajjej-ship-it
 /arch/scripts/bootstrap_context.py @fhajjej-ship-it
+/arch/scripts/validate_context.py @fhajjej-ship-it
 /scripts/install_codex_skill.sh @fhajjej-ship-it
 /scripts/validate_arch.py @fhajjej-ship-it
 /scripts/evaluate_arch.py @fhajjej-ship-it

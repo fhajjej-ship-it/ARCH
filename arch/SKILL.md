@@ -34,6 +34,7 @@ ARCH turns a loose product idea into a concrete `context/` folder that a coding 
 6. Verify the result.
    - Check that required files exist.
    - Search for stale placeholders.
+   - Run `scripts/validate_context.py` when available.
    - Report assumptions, open questions, and the next implementation unit.
 
 ## Guided Decision Interview
@@ -169,6 +170,8 @@ Before finishing, run the narrowest useful checks:
 test -d context
 find context -maxdepth 2 -type f | sort
 rg -n "TODO|TBD|PLACEHOLDER|\\[[A-Za-z0-9 _/-]+\\]" context
+python /path/to/arch/scripts/validate_context.py .
 ```
 
 The `rg` command should return no template placeholders. Intentional open questions are allowed only in `context/progress-tracker.md`.
+The context validator should exit successfully before claiming the project is ready for a coding assistant.

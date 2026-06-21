@@ -33,13 +33,13 @@ The output is designed to keep coding agents from improvising product scope, sta
 Install the pinned release:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.4.0/scripts/install_codex_skill.sh | bash -s -- v0.4.0
+curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.5.0/scripts/install_codex_skill.sh | bash -s -- v0.5.0
 ```
 
-Update to the latest release using the `v0.4.0` installer:
+Update to the latest release using the `v0.5.0` installer:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.4.0/scripts/install_codex_skill.sh | bash
+curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.5.0/scripts/install_codex_skill.sh | bash
 ```
 
 Install from a local checkout while developing ARCH:
@@ -63,6 +63,16 @@ For an existing project:
 ```text
 Use $arch to inspect this repo, update the context folder, and define the next buildable feature specs.
 ```
+
+## Check Context Readiness
+
+After ARCH creates `context/`, run the installed context doctor from the project root:
+
+```bash
+python ~/.codex/skills/arch/scripts/validate_context.py .
+```
+
+It checks for required context files, stale template placeholders, and at least one buildable feature spec with verification steps.
 
 ## Why This Exists
 
@@ -95,7 +105,7 @@ ARCH is local-first and should not require secrets. Security docs live in `docs/
 python3 scripts/validate_arch.py
 python3 scripts/evaluate_arch.py
 bash -n scripts/install_codex_skill.sh
-python3 -m py_compile arch/scripts/bootstrap_context.py scripts/validate_arch.py scripts/evaluate_arch.py
+python3 -m py_compile arch/scripts/bootstrap_context.py arch/scripts/validate_context.py scripts/validate_arch.py scripts/evaluate_arch.py
 ```
 
 ARCH uses semantic versions in `VERSION`, release notes in `RELEASE_NOTES.md`, Git tags like `v0.1.0`, and GitHub Releases. See `docs/release-process.md`.

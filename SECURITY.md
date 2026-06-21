@@ -35,6 +35,7 @@ In scope:
 
 - ARCH skill instructions and templates
 - local file writes performed by ARCH scripts
+- context readiness validation before agent handoff
 - Codex skill install and update script behavior
 - repository validation and eval scripts
 - GitHub Actions workflow and release process

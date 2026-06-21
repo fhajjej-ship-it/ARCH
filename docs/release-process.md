@@ -35,7 +35,7 @@ python3 scripts/validate_arch.py
 python3 scripts/evaluate_arch.py
 python3 scripts/evaluate_arch.py --write-baseline docs/evals/baseline-results.json
 bash -n scripts/install_codex_skill.sh
-python3 -m py_compile arch/scripts/bootstrap_context.py scripts/validate_arch.py scripts/evaluate_arch.py
+python3 -m py_compile arch/scripts/bootstrap_context.py arch/scripts/validate_context.py scripts/validate_arch.py scripts/evaluate_arch.py
 ```
 
 5. Commit the release changes.
@@ -78,7 +78,7 @@ Use the matching section from `RELEASE_NOTES.md` as the notes file content.
 ## Local Install From A Release
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.4.0/scripts/install_codex_skill.sh | bash -s -- v0.4.0
+curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.5.0/scripts/install_codex_skill.sh | bash -s -- v0.5.0
 ```
 
 ## Local Install From A Checkout

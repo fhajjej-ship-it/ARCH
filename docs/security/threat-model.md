@@ -10,6 +10,7 @@ In scope:
 
 - `arch/SKILL.md`
 - `arch/scripts/bootstrap_context.py`
+- `arch/scripts/validate_context.py`
 - `arch/assets/context-template/`
 - `scripts/install_codex_skill.sh`
 - `scripts/validate_arch.py`
@@ -94,6 +95,16 @@ Controls:
 - Existing installs are moved to timestamped backups before replacement.
 - Installer writes `.arch-version` so the installed release is visible.
 - CI runs an offline installer smoke test against the repository checkout.
+
+### T6: Context handoff quality failure
+
+ARCH could create a context folder that still contains template placeholders, lacks a buildable feature spec, or omits verification steps. A coding assistant may then implement from vague or stale instructions.
+
+Controls:
+
+- `validate_context.py` checks required context files, stale placeholders, required sections, feature specs, and verification bullets.
+- ARCH instructions tell the agent to run the context validator before claiming handoff readiness.
+- Repository validation tests the validator against both untouched templates and a concrete ready context fixture.
 
 ## Security Non-Goals
 

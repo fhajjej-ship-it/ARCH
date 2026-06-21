@@ -1,5 +1,27 @@
 # Release Notes
 
+## v0.5.0 - 2026-06-21
+
+Context doctor release.
+
+### Highlights
+
+- Added `arch/scripts/validate_context.py`, an installed context readiness checker for ARCH-generated projects.
+- The doctor checks for required context files, stale template placeholders, required sections, buildable feature specs, and feature verification bullets.
+- Updated ARCH skill instructions to run the doctor before claiming a project is ready for a coding assistant.
+- Added repository validation that proves the doctor fails untouched templates and passes a concrete ready context fixture.
+- Updated README, release process, CODEOWNERS, and security docs for the new handoff validator.
+
+### Verification
+
+```bash
+python3 scripts/validate_arch.py
+python3 scripts/evaluate_arch.py
+python3 scripts/evaluate_arch.py --write-baseline docs/evals/baseline-results.json
+bash -n scripts/install_codex_skill.sh
+python3 -m py_compile arch/scripts/bootstrap_context.py arch/scripts/validate_context.py scripts/validate_arch.py scripts/evaluate_arch.py
+```
+
 ## v0.4.0 - 2026-06-20
 
 Golden transcript eval release.

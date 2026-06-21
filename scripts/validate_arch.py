@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import os
+import json
 import re
 import subprocess
 import sys
@@ -177,6 +178,342 @@ def validate_bootstrap() -> None:
         if missing:
             fail(f"Bootstrap did not create: {', '.join(missing)}")
     ok("Bootstrap script creates expected files")
+
+
+def write_ready_context(context_root: Path) -> None:
+    feature_root = context_root / "feature-specs"
+    feature_root.mkdir(parents=True)
+    (context_root / "project-overview.md").write_text(
+        """# Project Overview
+
+## Product
+
+- Name: Ready Context
+- One-sentence description: Validates ARCH handoff quality.
+- Target user: solo developer
+- Core job-to-be-done: confirm context is actionable.
+
+## MVP Goal
+
+Validate that context files contain concrete implementation guidance.
+
+## Core User Flow
+
+1. Developer runs ARCH.
+2. Developer checks context.
+3. Coding assistant starts the first feature.
+4. Verification passes.
+
+## In Scope For V1
+
+- Context validation
+- Feature spec readiness
+- Verification guidance
+
+## Out Of Scope For V1
+
+- Runtime app generation
+- Cloud deployment
+- Billing
+
+## Success Criteria
+
+1. Required files exist.
+2. Feature spec has verification.
+3. No template placeholders remain.
+""",
+        encoding="utf-8",
+    )
+    (context_root / "architecture-context.md").write_text(
+        """# Architecture Context
+
+## Stack
+
+| Layer | Technology | Role |
+| --- | --- | --- |
+| Script | Python standard library | Context validation |
+
+## System Boundaries
+
+- `arch/scripts/validate_context.py` - validates project context files.
+
+## Data Model
+
+### Issue
+
+- path: context file path.
+- message: actionable validation result.
+
+## Storage Model
+
+- Relational data: none.
+- Files/artifacts: local Markdown context files.
+- Cache/session state: none.
+
+## Auth And Authorization
+
+- Auth provider: none.
+- User roles: local developer.
+- Mutation rule: validation is read-only.
+
+## Integrations
+
+- None.
+
+## Background Work
+
+- None.
+
+## Deployment
+
+- Runtime: local Python.
+- Hosting: none.
+- Required environment variables: none.
+
+## Invariants
+
+1. Validation must not modify project files.
+2. Missing required context files fail the check.
+3. Feature specs must include verification steps.
+""",
+        encoding="utf-8",
+    )
+    (context_root / "ui-context.md").write_text(
+        """# UI Context
+
+## UX Principles
+
+- Keep output scannable.
+- Put failures before summaries.
+- Use concrete file paths.
+
+## Primary Navigation
+
+- CLI output: validation report.
+
+## Key Screens
+
+### Terminal Report
+
+- Goal: show whether context is ready.
+- Primary action: fix listed issues.
+- Empty state: report missing context.
+- Loading state: not applicable for local script.
+- Error state: print failing issue list.
+
+## Responsive Behavior
+
+- Mobile: not applicable.
+- Tablet: not applicable.
+- Desktop: terminal width should remain readable.
+
+## Accessibility
+
+- Keyboard: script is command-line only.
+- Screen reader: plain text output.
+- Color/contrast: no color required.
+- Focus states: not applicable.
+
+## Visual System
+
+- Theme: terminal default.
+- Typography: terminal default.
+- Color use: none.
+- Components: none.
+""",
+        encoding="utf-8",
+    )
+    (context_root / "code-standards.md").write_text(
+        """# Code Standards
+
+## General
+
+- Use Python standard library.
+- Keep validation deterministic.
+- Return nonzero on failure.
+
+## Language And Framework
+
+- Python scripts should run with `python3`.
+
+## API And Server Logic
+
+- No server logic.
+
+## Data
+
+- Read local Markdown files only.
+
+## Dependencies
+
+- Do not add runtime dependencies.
+
+## Testing And Verification
+
+- Run `python3 arch/scripts/validate_context.py .`.
+- Run JSON mode for automation.
+
+## File Organization
+
+- `arch/scripts/validate_context.py` - installed validator.
+""",
+        encoding="utf-8",
+    )
+    (context_root / "ai-workflow-rules.md").write_text(
+        """# AI Workflow Rules
+
+## How To Work
+
+- Read context before implementation.
+- Implement one feature spec at a time.
+- Update progress after verification.
+
+## Scoping Rules
+
+- Keep changes tied to the active spec.
+
+## Quality Rules
+
+- Do not skip validation.
+
+## Verification
+
+- Run the context validator before starting implementation.
+
+## Progress Updates
+
+- Record completed checks in progress tracker.
+""",
+        encoding="utf-8",
+    )
+    (context_root / "progress-tracker.md").write_text(
+        """# Progress Tracker
+
+## Current Phase
+
+- Hardening
+
+## Current Goal
+
+- Validate context readiness.
+
+## Completed
+
+- Context files drafted with concrete content.
+
+## In Progress
+
+- None
+
+## Next Up
+
+- Run first implementation feature.
+
+## Open Questions
+
+- None
+
+## Architecture Decisions
+
+- Use local Python validation.
+
+## Verification Log
+
+- 2026-06-21 - context doctor - pending
+""",
+        encoding="utf-8",
+    )
+    (feature_root / "README.md").write_text(
+        """# Feature Specs
+
+Feature specs are one focused implementation unit each.
+""",
+        encoding="utf-8",
+    )
+    (feature_root / "01-context-doctor.md").write_text(
+        """# Feature 01: Context Doctor
+
+## Goal
+
+Validate ARCH context readiness.
+
+## User Value
+
+Developers know whether Codex can safely start implementation.
+
+## Requirements
+
+- Detect missing context files.
+- Detect stale template placeholders.
+- Require verification steps.
+
+## Data And State
+
+- Local Markdown context files.
+
+## UX
+
+- Happy path: print ready status.
+- Empty state: report missing context folder.
+- Loading state: not applicable.
+- Error state: list actionable issues.
+
+## Implementation Notes
+
+- Use Python standard library only.
+- Keep output deterministic.
+
+## Out Of Scope
+
+- Auto-fixing context content.
+
+## Check When Done
+
+- Run `python3 arch/scripts/validate_context.py .`.
+""",
+        encoding="utf-8",
+    )
+
+
+def validate_context_doctor() -> None:
+    script = ROOT / "arch" / "scripts" / "validate_context.py"
+    bootstrap = ROOT / "arch" / "scripts" / "bootstrap_context.py"
+    if not script.exists():
+        fail("Missing arch/scripts/validate_context.py")
+    if not os.access(script, os.X_OK):
+        fail("arch/scripts/validate_context.py must be executable")
+
+    syntax = run_arch_command([sys.executable, "-m", "py_compile", str(script)])
+    if syntax.returncode != 0:
+        fail(f"validate_context.py does not compile:\n{syntax.stderr}")
+
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp_path = Path(tmp)
+        templated_project = tmp_path / "templated"
+        templated_project.mkdir()
+        bootstrap_result = run_arch_command([sys.executable, str(bootstrap), str(templated_project)])
+        if bootstrap_result.returncode != 0:
+            fail(f"Bootstrap failed before context doctor test:\n{bootstrap_result.stderr}")
+        result = run_arch_command([sys.executable, str(script), str(templated_project)])
+        if result.returncode == 0:
+            fail("Context doctor should fail on untouched template placeholders")
+        if "stale placeholder" not in result.stdout:
+            fail("Context doctor failure should mention stale placeholders")
+
+        ready_project = tmp_path / "ready"
+        ready_project.mkdir()
+        write_ready_context(ready_project / "context")
+        result = run_arch_command([sys.executable, str(script), str(ready_project), "--json"])
+        if result.returncode != 0:
+            fail(f"Context doctor should pass ready context:\n{result.stderr}\n{result.stdout}")
+        try:
+            payload = json.loads(result.stdout)
+        except json.JSONDecodeError as exc:
+            fail(f"Context doctor JSON output is invalid: {exc}")
+        if payload.get("passed") is not True or payload.get("issue_count") != 0:
+            fail("Context doctor JSON output should report a passing context")
+
+    ok("Context doctor validates generated context readiness")
 
 
 def validate_bootstrap_rejects_symlinks() -> None:
@@ -403,6 +740,7 @@ def validate_security_docs() -> None:
     for phrase in (
         "/.github/workflows/ci.yml @fhajjej-ship-it",
         "/arch/scripts/bootstrap_context.py @fhajjej-ship-it",
+        "/arch/scripts/validate_context.py @fhajjej-ship-it",
         "/scripts/install_codex_skill.sh @fhajjej-ship-it",
         "/scripts/validate_arch.py @fhajjej-ship-it",
     ):
@@ -426,6 +764,7 @@ def main() -> int:
     validate_agents_metadata()
     validate_templates()
     validate_bootstrap()
+    validate_context_doctor()
     validate_bootstrap_rejects_symlinks()
     validate_bootstrap_preserves_hardlink_targets()
     validate_versioning()

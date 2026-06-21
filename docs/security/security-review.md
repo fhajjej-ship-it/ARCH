@@ -60,6 +60,10 @@ The GitHub Actions workflow pins third-party actions to full commit SHAs instead
 
 `scripts/install_codex_skill.sh` installs ARCH from explicit GitHub release tags, backs up an existing Codex skill directory before replacement, writes `.arch-version`, and supports `ARCH_SOURCE_DIR` for offline CI validation.
 
+### H6: Context handoff validator added
+
+`arch/scripts/validate_context.py` gives developers a local readiness check before handing a project to Codex or another coding assistant. It fails on missing context files, stale template placeholders, missing required sections, absent feature specs, and feature specs without verification bullets.
+
 ## Release Provenance
 
 ### v0.2.1
