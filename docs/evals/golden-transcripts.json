@@ -11,7 +11,7 @@
         "role": "assistant",
         "kind": "question",
         "repo_inspection": "Repo inspection: empty Git repo with no app decisions to preserve.",
-        "question": "Question 1/7: What product are we building, and who is the first target user?",
+        "question": "Question 1/7: Which first user workflow should v1 make durable, and who owns it?",
         "options": [
           {
             "label": "Recommended",
@@ -27,7 +27,8 @@
           }
         ],
         "why_recommended": "It narrows v1 to one user and one painful coordination job instead of a broad social platform.",
-        "expected_pause": true
+        "expected_pause": true,
+        "architecture_impact": "Locks the MVP workflow owner in context/project-overview.md and drives the first durable source-of-truth decision in context/architecture-context.md."
       },
       {
         "role": "user",
@@ -48,7 +49,7 @@
           }
         ],
         "next_question": {
-          "question": "Question 2/7: What single user action proves v1 is valuable?",
+          "question": "Question 2/7: Which completed action proves the planning workflow and becomes the first feature spec?",
           "options": [
             {
               "label": "Recommended",
@@ -63,7 +64,8 @@
               "text": "Use a different value proof in one sentence."
             }
           ],
-          "why_recommended": "It proves coordination value with the smallest measurable loop."
+          "why_recommended": "It proves coordination value with the smallest measurable loop.",
+          "architecture_impact": "Locks the measurable success criterion in context/project-overview.md and the first feature spec in context/feature-specs/."
         }
       },
       {
@@ -85,7 +87,7 @@
           }
         ],
         "next_question": {
-          "question": "Question 3/7: What interface should v1 use?",
+          "question": "Question 3/7: Which system boundary should own organizer and invitee interactions in v1?",
           "options": [
             {
               "label": "Recommended",
@@ -100,7 +102,8 @@
               "text": "Use a different interface in one sentence."
             }
           ],
-          "why_recommended": "A web app is the smallest shareable surface for group coordination."
+          "why_recommended": "A web app is the smallest shareable surface for group coordination.",
+          "architecture_impact": "Locks the app/interface boundary in context/architecture-context.md and the route/view split in context/ui-context.md."
         }
       }
     ],
@@ -139,7 +142,7 @@
         "role": "assistant",
         "kind": "question",
         "repo_inspection": "Repo inspection: existing Next.js/Supabase app with unfinished dashboard routes and no context folder.",
-        "question": "Question 1/6: Which user workflow should Codex finish first?",
+        "question": "Question 1/6: Which existing workflow should Codex complete first, and which stack decisions must it preserve?",
         "options": [
           {
             "label": "Recommended",
@@ -155,7 +158,8 @@
           }
         ],
         "why_recommended": "It finishes one operational loop and delays admin surface area until the core value is proven.",
-        "expected_pause": true
+        "expected_pause": true,
+        "architecture_impact": "Locks the preservation boundary for the current stack in context/architecture-context.md and the first rescue feature spec."
       },
       {
         "role": "user",
@@ -180,7 +184,7 @@
           }
         ],
         "next_question": {
-          "question": "Question 2/6: What data must be real for this workflow?",
+          "question": "Question 2/6: Which escalation data must be durable, and where should mutations be validated?",
           "options": [
             {
               "label": "Recommended",
@@ -195,7 +199,8 @@
               "text": "Use a different data boundary in one sentence."
             }
           ],
-          "why_recommended": "This workflow is only valuable if assignments and status changes persist."
+          "why_recommended": "This workflow is only valuable if assignments and status changes persist.",
+          "architecture_impact": "Locks the durable data model, mutation validation boundary, and feature spec requirements."
         }
       },
       {
@@ -217,7 +222,7 @@
           }
         ],
         "next_question": {
-          "question": "Question 3/6: What should happen to billing in v1?",
+          "question": "Question 3/6: What billing boundary should v1 preserve while the operational workflow is unfinished?",
           "options": [
             {
               "label": "Recommended",
@@ -232,7 +237,8 @@
               "text": "Use a different billing decision in one sentence."
             }
           ],
-          "why_recommended": "Billing is premature until the core support workflow proves value."
+          "why_recommended": "Billing is premature until the core support workflow proves value.",
+          "architecture_impact": "Locks billing as out of scope or preserved dependency in context/architecture-context.md and context/progress-tracker.md."
         }
       }
     ],
@@ -272,7 +278,7 @@
         "role": "assistant",
         "kind": "question",
         "repo_inspection": "Repo inspection: no existing product or stack decisions, so v1 can be scoped from first principles.",
-        "question": "Question 1/7: Who is the first user and what output must they trust?",
+        "question": "Question 1/7: Which user-owned output must v1 make trustworthy, and what does the system store?",
         "options": [
           {
             "label": "Recommended",
@@ -288,7 +294,8 @@
           }
         ],
         "why_recommended": "One founder and one buildable spec is easier to verify than a broad strategy platform.",
-        "expected_pause": true
+        "expected_pause": true,
+        "architecture_impact": "Locks the trusted AI output boundary in context/project-overview.md and the storage/review model in context/architecture-context.md."
       },
       {
         "role": "user",
@@ -309,7 +316,7 @@
           }
         ],
         "next_question": {
-          "question": "Question 2/7: What should the AI do in v1?",
+          "question": "Question 2/7: Which AI boundary should v1 own before generated content becomes trusted state?",
           "options": [
             {
               "label": "Recommended",
@@ -324,7 +331,8 @@
               "text": "Use a different AI boundary in one sentence."
             }
           ],
-          "why_recommended": "A constrained AI workflow is easier to review and safer than one-shot product generation."
+          "why_recommended": "A constrained AI workflow is easier to review and safer than one-shot product generation.",
+          "architecture_impact": "Locks model responsibilities, validation, review state, and trusted-output rules in context/architecture-context.md."
         }
       },
       {
@@ -346,7 +354,7 @@
           }
         ],
         "next_question": {
-          "question": "Question 3/7: What data and privacy boundary should v1 use?",
+          "question": "Question 3/7: What data and privacy boundary protects founder ideas and generated specs?",
           "options": [
             {
               "label": "Recommended",
@@ -361,7 +369,8 @@
               "text": "Use a different data and privacy boundary in one sentence."
             }
           ],
-          "why_recommended": "Founders need persistence and trust, while the no-training rule keeps the security boundary clear."
+          "why_recommended": "Founders need persistence and trust, while the no-training rule keeps the security boundary clear.",
+          "architecture_impact": "Locks sensitive data handling, retention, privacy rules, and AI-output persistence."
         }
       }
     ],

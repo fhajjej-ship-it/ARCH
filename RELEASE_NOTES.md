@@ -1,5 +1,27 @@
 # Release Notes
 
+## v0.7.0 - 2026-06-23
+
+Architect-grade interview release.
+
+### Highlights
+
+- Added an Architect Question Contract so ARCH questions lock boundaries, source of truth, trust boundaries, failure modes, or first vertical slices instead of asking generic preference questions.
+- Added `arch/references/architect-question-packs.md` with mode-specific question packs for new web apps, mobile apps, AI products, CLIs, existing repo rescue, internal ops tools, and regulated/security-sensitive apps.
+- Updated the question layout to include `Architecture impact`, making each decision traceable to the `context/` files it will update.
+- Strengthened eval scenarios and golden transcripts with required `architecture_impact` fields and deeper architect-level first questions.
+- Added validation checks that enforce the architect-grade interview contract and question-pack coverage.
+
+### Verification
+
+```bash
+python3 scripts/validate_arch.py
+python3 scripts/evaluate_arch.py
+python3 scripts/evaluate_arch.py --write-baseline docs/evals/baseline-results.json
+bash -n scripts/install_codex_skill.sh
+python3 -m py_compile arch/scripts/bootstrap_context.py arch/scripts/validate_context.py scripts/validate_arch.py scripts/evaluate_arch.py
+```
+
 ## v0.6.0 - 2026-06-21
 
 Question layout release.

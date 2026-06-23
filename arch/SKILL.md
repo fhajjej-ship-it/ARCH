@@ -14,9 +14,9 @@ ARCH turns a loose product idea into a concrete `context/` folder that a coding 
 1. Inspect the repository first.
    - Read existing README, package files, framework config, database schema, docs, and any current `context/` folder.
    - Preserve useful existing decisions. Do not overwrite user-written context without reading it.
-2. Run a guided decision interview.
+2. Run an architect-grade decision interview.
    - Ask exactly one question at a time.
-   - Include a recommended default answer and the tradeoff behind it.
+   - Include a recommended default answer, the tradeoff behind it, and the architecture impact.
    - Wait for the developer's answer before asking the next question.
    - Treat "yes", "use recommended", "confirm", or an explicit answer as a confirmed architecture decision.
    - Skip a question only when the repository or earlier answers already settle it.
@@ -41,60 +41,76 @@ ARCH turns a loose product idea into a concrete `context/` folder that a coding 
 
 Never ask the full intake as a numbered list. ARCH should feel like a senior architect interviewing the developer, one decision at a time.
 
+Classify the project mode after repo inspection: `new_web_app`, `mobile`, `ai_product`, `cli_tool`, `existing_repo`, `ops_tool`, or `regulated_risk`. Read `references/architect-question-packs.md` before asking the first question, then use only the relevant pack(s).
+
 Use this loop:
 
 1. State what was learned from the repo inspection in one short sentence.
-2. Ask one question.
+2. Ask one architect-level question.
 3. Give exactly three answer options.
 4. Make option 1 the recommended default.
 5. Make option 2 the strongest reasonable alternative.
 6. Make option 3 `Other`, for a free-form answer.
-7. Explain the tradeoff in one short sentence.
+7. Explain the tradeoff and architecture impact.
 8. Stop and wait.
+
+### Architect Question Contract
+
+Every question must lock one architecture decision, not ask for a generic preference. Good questions decide a boundary, source of truth, invariant, failure mode, or first vertical slice. Before asking, know:
+
+- Which implementation decision this answer will unlock.
+- Which risk or tradeoff the recommendation resolves.
+- When the recommended option is wrong.
+- Which `context/` files will change after confirmation.
+
+Do not ask shallow questions such as "What tech stack do you want?" or "Do you need auth?" Instead ask about the architecture consequence: where writes happen, what data must be durable, who can mutate it, what external output is trusted, what can fail, and what must be verified.
 
 Use this compact question layout:
 
 ```text
 **Question 1/N**
-[single decision]
+[single architecture decision]
 
 **1. Recommended**
-[best default for this project stage].
+[best default for this project stage, including when it fits].
 
 **2. Second option**
-[strongest reasonable alternative].
+[strongest reasonable alternative, including when it fits].
 
 **3. Other**
 [free-form answer].
 
 **Why I recommend 1**
-[short tradeoff].
+[short tradeoff, including when option 1 is wrong].
+
+**Architecture impact**
+[what this locks and which `context/` files will change].
 
 **Reply:** `1`, `2`, or `3`. If `3`, write your answer in one sentence.
 ```
 
 Keep options easy to select. Put each option label on its own bold line, keep each option body to one short sentence, and leave one blank line between blocks. Do not use tables for question options because they wrap poorly in chat. Do not make the developer write a structured answer unless they choose `Other`.
 
-Recommended question sequence:
+Architecture decision ladder:
 
-1. Product and target user.
-   - Recommend narrowing to one target user and one painful job.
-   - Push back if the product serves multiple audiences in v1.
-2. Value proof.
-   - Recommend one user action that proves the product works.
-   - Prefer a measurable workflow completion over vague engagement.
-3. Interface.
-   - Recommend the smallest interface that proves the job: usually web app for collaborative/product workflows, CLI for local developer tools, API only for integration-first products.
-4. Stack and deployment.
-   - Recommend the simplest proven stack compatible with the repo and team.
+1. Product boundary and value proof.
+   - Recommend one first user, one painful job, and one completed workflow that proves v1 works.
+   - Push back if the product serves multiple audiences or has no measurable success action.
+2. System boundary and interface.
+   - Decide whether v1 is a web app, mobile app, CLI, API, or existing-app feature, and what code boundary owns the workflow.
+3. Domain model and source of truth.
+   - Decide the core entities, durable state, ownership model, and which data can be mocked or hardcoded.
+4. Auth and permission boundaries.
+   - Decide who can read or mutate each important object, and where server-side validation must happen.
+5. Integrations, AI, and async work.
+   - Decide which external outputs can be trusted, which need review, and whether slow or retry-heavy work needs a job boundary.
+6. Stack and deployment.
+   - Recommend the simplest proven stack compatible with the repo, runtime constraints, and team.
    - Read `references/architecture-principles.md` before recommending concrete stack choices.
-5. Data and persistence.
-   - Recommend the smallest real data model and identify what can be mocked, hardcoded, or manually operated.
-6. Auth, security, integrations, and AI.
-   - Recommend managed auth and validated server-side boundaries when user data exists.
-   - Recommend delaying payments, dashboards, and heavy integrations unless they prove v1 value.
-7. Coding-agent handoff.
-   - Recommend Codex-friendly `context/` plus assistant-specific rule files only when needed.
+7. First buildable vertical slice.
+   - Decide the smallest end-to-end feature spec that crosses UI, state, validation, and verification without dragging in optional surfaces.
+8. Coding-agent handoff and invariants.
+   - Record the rules future agents must not violate, then recommend assistant-specific rule files only when needed.
    - Read `references/agent-compatibility.md` when the user names Codex, Claude Code, Cursor, or another assistant.
 
 After each answer, briefly confirm the decision and ask the next single question. When enough decisions exist, summarize the architecture assumptions before writing files.
@@ -140,7 +156,7 @@ Create or update these files:
 - `context/progress-tracker.md` - current phase, completed work, next up, open questions, and decisions.
 - `context/feature-specs/*.md` - one file per buildable implementation unit.
 
-Read `references/context-file-guide.md` when writing the context files. Read `references/architecture-principles.md` when selecting or challenging a stack. Read `references/agent-compatibility.md` when the user cares about Codex, Claude Code, Cursor, or other assistant-specific execution.
+Read `references/context-file-guide.md` when writing the context files. Read `references/architect-question-packs.md` when selecting interview questions. Read `references/architecture-principles.md` when selecting or challenging a stack. Read `references/agent-compatibility.md` when the user cares about Codex, Claude Code, Cursor, or other assistant-specific execution.
 
 ## Bootstrap Command
 

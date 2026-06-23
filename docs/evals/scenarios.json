@@ -6,7 +6,7 @@
     "repo_state": "Empty Git repository with no README, app files, or context folder.",
     "prompt": "Use $arch. I want to build a summer app.",
     "expected_first_question": {
-      "question": "What product are we building, and who is the first target user?",
+      "question": "What first user workflow should v1 make durable, and who owns that workflow?",
       "options": [
         {
           "label": "Recommended",
@@ -21,7 +21,8 @@
           "text": "The developer describes a different product and first target user."
         }
       ],
-      "why_recommended": "It narrows a vague seasonal app into one user, one job, and a web workflow that can be validated quickly."
+      "why_recommended": "It narrows a vague seasonal app into one user, one job, and a web workflow that can be validated quickly.",
+      "architecture_impact": "Locks the MVP workflow owner in context/project-overview.md and drives the first durable source-of-truth decision in context/architecture-context.md."
     },
     "confirmed_answer_flow": [
       {
@@ -34,10 +35,26 @@
       }
     ],
     "context_expectations": {
-      "context/project-overview.md": ["target user", "MVP goal", "core user flow", "out of scope"],
-      "context/architecture-context.md": ["web app", "data model", "deployment"],
-      "context/progress-tracker.md": ["confirmed decisions", "open questions", "next up"],
-      "context/feature-specs/01-foundation.md": ["check when done", "requirements"]
+      "context/project-overview.md": [
+        "target user",
+        "MVP goal",
+        "core user flow",
+        "out of scope"
+      ],
+      "context/architecture-context.md": [
+        "web app",
+        "data model",
+        "deployment"
+      ],
+      "context/progress-tracker.md": [
+        "confirmed decisions",
+        "open questions",
+        "next up"
+      ],
+      "context/feature-specs/01-foundation.md": [
+        "check when done",
+        "requirements"
+      ]
     },
     "red_flags": [
       "asks all seven intake questions at once",
@@ -52,7 +69,7 @@
     "repo_state": "Fresh repository with product name only.",
     "prompt": "Use $arch. Build a product where founders turn messy startup ideas into specs AI coding agents can implement.",
     "expected_first_question": {
-      "question": "Who is the first target user, and what messy idea-to-spec job must v1 solve?",
+      "question": "Which user-owned output should v1 make trustworthy, and what AI boundary does that create?",
       "options": [
         {
           "label": "Recommended",
@@ -67,7 +84,8 @@
           "text": "The developer names another first buyer/user and job."
         }
       ],
-      "why_recommended": "Solo founders make the smallest first user segment and map directly to ARCH-style context output."
+      "why_recommended": "Solo founders make the smallest first user segment and map directly to ARCH-style context output.",
+      "architecture_impact": "Locks the trusted AI output boundary in context/project-overview.md and the storage/review model in context/architecture-context.md."
     },
     "confirmed_answer_flow": [
       {
@@ -80,11 +98,29 @@
       }
     ],
     "context_expectations": {
-      "context/project-overview.md": ["solo technical founders", "idea-to-spec", "MVP"],
-      "context/architecture-context.md": ["AI output validation", "prompt/schema versioning", "artifact storage"],
-      "context/code-standards.md": ["server-side validation", "AI output validation"],
-      "context/progress-tracker.md": ["confirmed decisions", "open questions", "next up"],
-      "context/feature-specs/02-core-generation.md": ["structured spec generation", "failure state"]
+      "context/project-overview.md": [
+        "solo technical founders",
+        "idea-to-spec",
+        "MVP"
+      ],
+      "context/architecture-context.md": [
+        "AI output validation",
+        "prompt/schema versioning",
+        "artifact storage"
+      ],
+      "context/code-standards.md": [
+        "server-side validation",
+        "AI output validation"
+      ],
+      "context/progress-tracker.md": [
+        "confirmed decisions",
+        "open questions",
+        "next up"
+      ],
+      "context/feature-specs/02-core-generation.md": [
+        "structured spec generation",
+        "failure state"
+      ]
     },
     "red_flags": [
       "builds a marketplace or team workspace in v1",
@@ -99,7 +135,7 @@
     "repo_state": "Next.js app with package.json, app routes, Prisma schema, and no context folder.",
     "prompt": "Use $arch to inspect this repo and create context so Codex can finish the MVP without drifting.",
     "expected_first_question": {
-      "question": "What is the one MVP workflow this existing app must complete first?",
+      "question": "Which existing workflow should Codex complete first, and which current stack decisions must it preserve?",
       "options": [
         {
           "label": "Recommended",
@@ -114,7 +150,8 @@
           "text": "The developer identifies a different first workflow or constraint."
         }
       ],
-      "why_recommended": "Existing code should be preserved unless it blocks the MVP; one workflow gives future agents a clear path."
+      "why_recommended": "Existing code should be preserved unless it blocks the MVP; one workflow gives future agents a clear path.",
+      "architecture_impact": "Locks the preservation boundary for the current stack in context/architecture-context.md and the first rescue feature spec."
     },
     "confirmed_answer_flow": [
       {
@@ -123,11 +160,29 @@
       }
     ],
     "context_expectations": {
-      "context/project-overview.md": ["MVP workflow", "target user", "scope cuts"],
-      "context/architecture-context.md": ["existing stack", "system boundaries", "auth", "database"],
-      "context/ai-workflow-rules.md": ["preserve existing behavior", "update context"],
-      "context/progress-tracker.md": ["repo inspection findings", "next implementation unit"],
-      "context/feature-specs/01-complete-core-flow.md": ["existing files", "checks"]
+      "context/project-overview.md": [
+        "MVP workflow",
+        "target user",
+        "scope cuts"
+      ],
+      "context/architecture-context.md": [
+        "existing stack",
+        "system boundaries",
+        "auth",
+        "database"
+      ],
+      "context/ai-workflow-rules.md": [
+        "preserve existing behavior",
+        "update context"
+      ],
+      "context/progress-tracker.md": [
+        "repo inspection findings",
+        "next implementation unit"
+      ],
+      "context/feature-specs/01-complete-core-flow.md": [
+        "existing files",
+        "checks"
+      ]
     },
     "red_flags": [
       "recommends a rewrite without evidence",
@@ -142,7 +197,7 @@
     "repo_state": "Empty repo named repo-cleaner.",
     "prompt": "Use $arch. I want a tool that cleans up messy repos before agents work on them.",
     "expected_first_question": {
-      "question": "What is the first cleanup job and who runs it?",
+      "question": "Which repo cleanup operation should v1 perform, and what write-safety boundary protects the developer?",
       "options": [
         {
           "label": "Recommended",
@@ -157,7 +212,8 @@
           "text": "The developer describes another workflow or runner."
         }
       ],
-      "why_recommended": "A CLI avoids auth and hosting while proving whether the cleanup workflow is useful."
+      "why_recommended": "A CLI avoids auth and hosting while proving whether the cleanup workflow is useful.",
+      "architecture_impact": "Locks the CLI write-safety boundary in context/architecture-context.md and context/code-standards.md."
     },
     "confirmed_answer_flow": [
       {
@@ -166,11 +222,29 @@
       }
     ],
     "context_expectations": {
-      "context/project-overview.md": ["developer CLI", "repo cleanup report", "MVP"],
-      "context/architecture-context.md": ["CLI", "file system writes", "dry run"],
-      "context/code-standards.md": ["no silent overwrite", "dry-run behavior"],
-      "context/progress-tracker.md": ["confirmed decisions", "open questions", "next up"],
-      "context/feature-specs/01-cli-scan-report.md": ["manual verification", "sample repo"]
+      "context/project-overview.md": [
+        "developer CLI",
+        "repo cleanup report",
+        "MVP"
+      ],
+      "context/architecture-context.md": [
+        "CLI",
+        "file system writes",
+        "dry run"
+      ],
+      "context/code-standards.md": [
+        "no silent overwrite",
+        "dry-run behavior"
+      ],
+      "context/progress-tracker.md": [
+        "confirmed decisions",
+        "open questions",
+        "next up"
+      ],
+      "context/feature-specs/01-cli-scan-report.md": [
+        "manual verification",
+        "sample repo"
+      ]
     },
     "red_flags": [
       "starts with SaaS dashboard",
@@ -185,7 +259,7 @@
     "repo_state": "No code yet. User says mobile matters.",
     "prompt": "Use $arch. I want to build a habit accountability app with friends.",
     "expected_first_question": {
-      "question": "Who is the first user and what accountability loop must v1 prove?",
+      "question": "Which accountability loop must v1 prove, and does it require a native capability?",
       "options": [
         {
           "label": "Recommended",
@@ -200,7 +274,8 @@
           "text": "The developer specifies a different first user or mobile requirement."
         }
       ],
-      "why_recommended": "Responsive web proves the behavior faster; Expo is justified if native notifications are core to the value proof."
+      "why_recommended": "Responsive web proves the behavior faster; Expo is justified if native notifications are core to the value proof.",
+      "architecture_impact": "Locks the mobile/native capability boundary in context/project-overview.md and context/architecture-context.md."
     },
     "confirmed_answer_flow": [
       {
@@ -209,11 +284,30 @@
       }
     ],
     "context_expectations": {
-      "context/project-overview.md": ["friend group", "daily check-in", "value proof"],
-      "context/architecture-context.md": ["Expo", "notifications", "auth"],
-      "context/ui-context.md": ["mobile-first", "empty states", "accessibility"],
-      "context/progress-tracker.md": ["confirmed decisions", "open questions", "next up"],
-      "context/feature-specs/01-habit-check-in.md": ["check-in flow", "notification permission"]
+      "context/project-overview.md": [
+        "friend group",
+        "daily check-in",
+        "value proof"
+      ],
+      "context/architecture-context.md": [
+        "Expo",
+        "notifications",
+        "auth"
+      ],
+      "context/ui-context.md": [
+        "mobile-first",
+        "empty states",
+        "accessibility"
+      ],
+      "context/progress-tracker.md": [
+        "confirmed decisions",
+        "open questions",
+        "next up"
+      ],
+      "context/feature-specs/01-habit-check-in.md": [
+        "check-in flow",
+        "notification permission"
+      ]
     },
     "red_flags": [
       "ignores the mobile requirement",
@@ -228,7 +322,7 @@
     "repo_state": "Existing spreadsheet process, no app code.",
     "prompt": "Use $arch. We need an internal dashboard for support escalations.",
     "expected_first_question": {
-      "question": "What repeated support decision must the dashboard make easier first?",
+      "question": "Which operational record should v1 help support leads change, and what audit boundary is required?",
       "options": [
         {
           "label": "Recommended",
@@ -243,7 +337,8 @@
           "text": "The developer names a different first operational decision."
         }
       ],
-      "why_recommended": "It focuses on the repeated decision instead of building a broad analytics product."
+      "why_recommended": "It focuses on the repeated decision instead of building a broad analytics product.",
+      "architecture_impact": "Locks the mutable ops record, audit requirement, and first workflow spec in context/architecture-context.md."
     },
     "confirmed_answer_flow": [
       {
@@ -252,11 +347,31 @@
       }
     ],
     "context_expectations": {
-      "context/project-overview.md": ["support leads", "triage", "out of scope"],
-      "context/architecture-context.md": ["internal auth", "escalation model", "audit-sensitive updates"],
-      "context/ui-context.md": ["dense table", "filters", "empty state"],
-      "context/progress-tracker.md": ["confirmed decisions", "open questions", "next up"],
-      "context/feature-specs/01-escalation-list.md": ["owner", "severity", "next action"]
+      "context/project-overview.md": [
+        "support leads",
+        "triage",
+        "out of scope"
+      ],
+      "context/architecture-context.md": [
+        "internal auth",
+        "escalation model",
+        "audit-sensitive updates"
+      ],
+      "context/ui-context.md": [
+        "dense table",
+        "filters",
+        "empty state"
+      ],
+      "context/progress-tracker.md": [
+        "confirmed decisions",
+        "open questions",
+        "next up"
+      ],
+      "context/feature-specs/01-escalation-list.md": [
+        "owner",
+        "severity",
+        "next action"
+      ]
     },
     "red_flags": [
       "starts with analytics dashboards",
@@ -286,7 +401,8 @@
           "text": "The developer specifies a safer regulated workflow and review boundary."
         }
       ],
-      "why_recommended": "Direct medical advice is high risk; a note organizer can deliver value while preserving clinician judgment."
+      "why_recommended": "Direct medical advice is high risk; a note organizer can deliver value while preserving clinician judgment.",
+      "architecture_impact": "Locks the regulated-risk scope boundary, safety claims, and review requirements in context/project-overview.md and context/code-standards.md."
     },
     "confirmed_answer_flow": [
       {
@@ -295,11 +411,31 @@
       }
     ],
     "context_expectations": {
-      "context/project-overview.md": ["not medical advice", "clinician prep", "out of scope"],
-      "context/architecture-context.md": ["sensitive data", "security boundaries", "AI output disclaimers"],
-      "context/code-standards.md": ["privacy", "validation", "no diagnosis claims"],
-      "context/progress-tracker.md": ["confirmed decisions", "open questions", "next up"],
-      "context/feature-specs/01-symptom-notes.md": ["disclaimer", "export", "delete data"]
+      "context/project-overview.md": [
+        "not medical advice",
+        "clinician prep",
+        "out of scope"
+      ],
+      "context/architecture-context.md": [
+        "sensitive data",
+        "security boundaries",
+        "AI output disclaimers"
+      ],
+      "context/code-standards.md": [
+        "privacy",
+        "validation",
+        "no diagnosis claims"
+      ],
+      "context/progress-tracker.md": [
+        "confirmed decisions",
+        "open questions",
+        "next up"
+      ],
+      "context/feature-specs/01-symptom-notes.md": [
+        "disclaimer",
+        "export",
+        "delete data"
+      ]
     },
     "red_flags": [
       "accepts direct diagnosis as v1",

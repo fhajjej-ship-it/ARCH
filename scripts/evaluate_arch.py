@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCENARIOS_PATH = ROOT / "docs" / "evals" / "scenarios.json"
 TRANSCRIPTS_PATH = ROOT / "docs" / "evals" / "golden-transcripts.json"
 SKILL_PATH = ROOT / "arch" / "SKILL.md"
+QUESTION_PACK_PATH = ROOT / "arch" / "references" / "architect-question-packs.md"
 VERSION_PATH = ROOT / "VERSION"
 REQUIRED_CORE_CONTEXT = {
     "context/project-overview.md",
@@ -60,6 +61,9 @@ def validate_three_option_question(question: dict[str, Any], label: str) -> list
 
     if not str(question.get("why_recommended", "")).strip():
         issues.append(f"{label}.why_recommended is required")
+
+    if not str(question.get("architecture_impact", "")).strip():
+        issues.append(f"{label}.architecture_impact is required")
 
     return issues
 
@@ -310,6 +314,13 @@ def validate_skill_contract() -> None:
         "Make option 1 the recommended default",
         "Make option 2 the strongest reasonable alternative",
         "Make option 3 `Other`",
+        "Architect Question Contract",
+        "Every question must lock one architecture decision",
+        "Read `references/architect-question-packs.md`",
+        "Domain model and source of truth",
+        "Auth and permission boundaries",
+        "First buildable vertical slice",
+        "**Architecture impact**",
         "Use this compact question layout",
         "**1. Recommended**",
         "**2. Second option**",
@@ -322,7 +333,24 @@ def validate_skill_contract() -> None:
     missing = [phrase for phrase in required_phrases if phrase not in skill_text]
     if missing:
         fail(f"ARCH skill missing eval-required behavior: {', '.join(missing)}")
-    ok("Skill contract supports 3-option interview and context writes")
+
+    question_pack = QUESTION_PACK_PATH.read_text(encoding="utf-8")
+    required_pack_phrases = [
+        "## New Web App",
+        "## Mobile App",
+        "## AI Product",
+        "## CLI Or Developer Tool",
+        "## Existing Repo Rescue",
+        "## Internal Ops Tool",
+        "## Regulated Or Security-Sensitive App",
+        "source of truth",
+        "trust boundary",
+        "vertical slice",
+    ]
+    missing_pack = [phrase for phrase in required_pack_phrases if phrase not in question_pack]
+    if missing_pack:
+        fail(f"ARCH question pack missing eval-required behavior: {', '.join(missing_pack)}")
+    ok("Skill contract supports architect-grade 3-option interview and context writes")
 
 
 def evaluate() -> dict[str, Any]:

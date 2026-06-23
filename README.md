@@ -12,7 +12,7 @@ ARCH is an agent skill for turning a vague software idea into a `context/` folde
 
 It is not a SaaS or a project generator. It is a pre-build architecture pass: interview the developer, reduce scope to the smallest useful MVP, choose a practical architecture, and write durable context files before implementation starts.
 
-ARCH asks one decision question at a time. Each question uses a scan-friendly layout with three easy choices: `1. Recommended`, `2. Second option`, and `3. Other`. When the developer answers or confirms a choice, ARCH records that decision in `context/` and keeps going.
+ARCH asks one architect-level decision question at a time. Each question uses a scan-friendly layout with three easy choices: `1. Recommended`, `2. Second option`, and `3. Other`, plus the architecture impact of the decision. When the developer answers or confirms a choice, ARCH records that decision in `context/` and keeps going.
 
 ## What It Creates
 
@@ -33,13 +33,13 @@ The output is designed to keep coding agents from improvising product scope, sta
 Install the pinned release:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.6.0/scripts/install_codex_skill.sh | bash -s -- v0.6.0
+curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.7.0/scripts/install_codex_skill.sh | bash -s -- v0.7.0
 ```
 
-Update to the latest release using the `v0.6.0` installer:
+Update to the latest release using the `v0.7.0` installer:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.6.0/scripts/install_codex_skill.sh | bash
+curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.7.0/scripts/install_codex_skill.sh | bash
 ```
 
 Install from a local checkout while developing ARCH:
@@ -93,7 +93,7 @@ See `examples/ghost-ai-context/context/` for an example context folder from a co
 
 ## Eval Pack
 
-ARCH includes a static eval pack in `docs/evals/` with realistic project scenarios for new apps, existing repos, AI products, CLIs, mobile apps, ops tools, and regulated-risk ideas. Use it before releases to check the 3-option interview and context-writing workflow.
+ARCH includes a static eval pack in `docs/evals/` with realistic project scenarios for new apps, existing repos, AI products, CLIs, mobile apps, ops tools, and regulated-risk ideas. Use it before releases to check the architect-grade 3-option interview, architecture-impact explanation, and context-writing workflow.
 
 ## Security
 
