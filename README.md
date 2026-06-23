@@ -33,13 +33,13 @@ The output is designed to keep coding agents from improvising product scope, sta
 Install the pinned release:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.7.0/scripts/install_codex_skill.sh | bash -s -- v0.7.0
+curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.8.0/scripts/install_codex_skill.sh | bash -s -- v0.8.0
 ```
 
-Update to the latest release using the `v0.7.0` installer:
+Update to the latest release using the `v0.8.0` installer:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.7.0/scripts/install_codex_skill.sh | bash
+curl -fsSL https://raw.githubusercontent.com/fhajjej-ship-it/ARCH/v0.8.0/scripts/install_codex_skill.sh | bash
 ```
 
 Install from a local checkout while developing ARCH:
@@ -93,7 +93,7 @@ See `examples/ghost-ai-context/context/` for an example context folder from a co
 
 ## Eval Pack
 
-ARCH includes a static eval pack in `docs/evals/` with realistic project scenarios for new apps, existing repos, AI products, CLIs, mobile apps, ops tools, and regulated-risk ideas. Use it before releases to check the architect-grade 3-option interview, architecture-impact explanation, and context-writing workflow.
+ARCH includes a static eval pack in `docs/evals/` with realistic project scenarios for new apps, existing repos, AI products, CLIs, mobile apps, ops tools, and regulated-risk ideas. It also includes a live forward-test pack for fresh Codex runs against real or fixture projects. Use both before releases that change interview behavior.
 
 ## Security
 

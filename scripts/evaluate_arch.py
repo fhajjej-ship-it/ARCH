@@ -14,6 +14,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 SCENARIOS_PATH = ROOT / "docs" / "evals" / "scenarios.json"
 TRANSCRIPTS_PATH = ROOT / "docs" / "evals" / "golden-transcripts.json"
+LIVE_FORWARD_TESTS_PATH = ROOT / "docs" / "evals" / "live-forward-tests.md"
 SKILL_PATH = ROOT / "arch" / "SKILL.md"
 QUESTION_PACK_PATH = ROOT / "arch" / "references" / "architect-question-packs.md"
 VERSION_PATH = ROOT / "VERSION"
@@ -353,8 +354,32 @@ def validate_skill_contract() -> None:
     ok("Skill contract supports architect-grade 3-option interview and context writes")
 
 
+def validate_live_forward_tests() -> int:
+    if not LIVE_FORWARD_TESTS_PATH.exists():
+        fail(f"Missing required file: {LIVE_FORWARD_TESTS_PATH.relative_to(ROOT)}")
+    live_tests = LIVE_FORWARD_TESTS_PATH.read_text(encoding="utf-8")
+    test_ids = re.findall(r"^## LFT-\d{2} ", live_tests, flags=re.MULTILINE)
+    require(len(test_ids) >= 5, "live-forward-tests.md must include at least 5 LFT scenarios")
+    required_phrases = [
+        "Scoring Rubric",
+        "One-question flow",
+        "Architecture depth",
+        "Architecture impact",
+        "Context write-through",
+        "MVP discipline",
+        "Real Summer App Dogfood",
+        "Release Decision",
+    ]
+    missing = [phrase for phrase in required_phrases if phrase not in live_tests]
+    if missing:
+        fail(f"live-forward-tests.md missing required phrase(s): {', '.join(missing)}")
+    ok(f"Live forward-test pack is present: {len(test_ids)} scenarios")
+    return len(test_ids)
+
+
 def evaluate() -> dict[str, Any]:
     validate_skill_contract()
+    live_forward_test_count = validate_live_forward_tests()
     scenarios = load_json(SCENARIOS_PATH)
     require(isinstance(scenarios, list), "docs/evals/scenarios.json must be a list")
     require(len(scenarios) >= 7, "At least 7 eval scenarios are required")
@@ -380,6 +405,7 @@ def evaluate() -> dict[str, Any]:
         "generated_at": datetime.now(UTC).isoformat(),
         "scenario_count": len(scenarios),
         "golden_transcript_count": len(transcripts),
+        "live_forward_test_count": live_forward_test_count,
         "passed": len(failures) == 0 and len(transcript_failures) == 0,
         "score": round(
             sum(result["score"] for result in combined_results) / len(combined_results),

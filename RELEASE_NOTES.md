@@ -1,5 +1,27 @@
 # Release Notes
 
+## v0.8.0 - 2026-06-23
+
+Live forward-test pack release.
+
+### Highlights
+
+- Added `docs/evals/live-forward-tests.md` with six manual live tests for installed `$arch` behavior across empty app, existing repo rescue, AI product, mobile app, regulated-risk app, and real Summer app dogfood.
+- Added a scoring rubric for one-question flow, three-option UX, architecture depth, recommendation quality, architecture impact, context write-through, and MVP discipline.
+- Captured a read-only Summer app dogfood baseline: existing Expo/Supabase app with `context/` present and context-doctor stale-placeholder findings to verify ARCH handles real repo cleanup.
+- Updated eval documentation so prompt-behavior releases use live forward tests in addition to static scenarios and golden transcripts.
+- Added validation/eval checks that require the live forward-test pack and report the number of live scenarios.
+
+### Verification
+
+```bash
+python3 scripts/validate_arch.py
+python3 scripts/evaluate_arch.py
+python3 scripts/evaluate_arch.py --write-baseline docs/evals/baseline-results.json
+bash -n scripts/install_codex_skill.sh
+python3 -m py_compile arch/scripts/bootstrap_context.py arch/scripts/validate_context.py scripts/validate_arch.py scripts/evaluate_arch.py
+```
+
 ## v0.7.0 - 2026-06-23
 
 Architect-grade interview release.

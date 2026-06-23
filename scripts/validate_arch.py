@@ -621,12 +621,31 @@ def validate_eval_pack() -> None:
         ROOT / "docs" / "evals" / "README.md",
         ROOT / "docs" / "evals" / "scenarios.json",
         ROOT / "docs" / "evals" / "golden-transcripts.json",
+        ROOT / "docs" / "evals" / "live-forward-tests.md",
         ROOT / "docs" / "evals" / "baseline-results.json",
         ROOT / "scripts" / "evaluate_arch.py",
     ]
     for path in required_paths:
         if not path.exists():
             fail(f"Missing eval artifact: {path.relative_to(ROOT)}")
+
+    live_tests = read(ROOT / "docs" / "evals" / "live-forward-tests.md")
+    test_ids = re.findall(r"^## LFT-\d{2} ", live_tests, flags=re.MULTILINE)
+    if len(test_ids) < 5:
+        fail("live-forward-tests.md must include at least 5 LFT scenarios")
+    required_live_phrases = [
+        "Scoring Rubric",
+        "One-question flow",
+        "Architecture depth",
+        "Architecture impact",
+        "Context write-through",
+        "MVP discipline",
+        "Real Summer App Dogfood",
+        "Release Decision",
+    ]
+    missing_live = [phrase for phrase in required_live_phrases if phrase not in live_tests]
+    if missing_live:
+        fail(f"Missing live forward-test phrase(s): {', '.join(missing_live)}")
     ok("Eval pack files are present")
 
 

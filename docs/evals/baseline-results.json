@@ -1,8 +1,9 @@
 {
-  "version": "0.7.0",
-  "generated_at": "2026-06-23T07:49:15.543455+00:00",
+  "version": "0.8.0",
+  "generated_at": "2026-06-23T08:16:24.406004+00:00",
   "scenario_count": 7,
   "golden_transcript_count": 3,
+  "live_forward_test_count": 6,
   "passed": true,
   "score": 1.0,
   "results": [

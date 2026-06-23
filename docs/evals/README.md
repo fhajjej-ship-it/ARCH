@@ -17,7 +17,7 @@ This eval pack checks whether ARCH keeps its core promise across realistic proje
 python3 scripts/evaluate_arch.py
 ```
 
-This is a static eval. It validates the scenario catalog, the expected 3-option interview shape, context-writing expectations, and the installed skill instructions. It does not call a model.
+This is a static eval. It validates the scenario catalog, the expected 3-option interview shape, context-writing expectations, the live forward-test pack, and the installed skill instructions. It does not call a model.
 
 ## Golden Transcripts
 
@@ -34,6 +34,21 @@ This is a static eval. It validates the scenario catalog, the expected 3-option 
 
 The evaluator checks the transcript structure and fails the release if a golden transcript drifts away from that contract.
 
+## Live Forward Tests
+
+`live-forward-tests.md` contains manual tests for fresh Codex sessions using the installed `$arch` skill. Use it when changing interview behavior because static fixtures cannot prove that a real run feels architect-level.
+
+The live pack covers:
+
+- empty new app
+- existing repo rescue
+- AI product
+- mobile app
+- regulated-risk app
+- real Summer app dogfood
+
+Live tests should not receive the expected answers or rubric during the run.
+
 ## Scenario Workflow
 
 For manual forward testing:
@@ -43,6 +58,8 @@ For manual forward testing:
 3. Confirm the recommended answer with `1` unless the scenario says otherwise.
 4. Check that ARCH creates or updates `context/` after enough decisions exist.
 5. Score the result against the rubric below.
+
+For release candidates that change interview behavior, use `live-forward-tests.md` instead of only this short workflow.
 
 ## Rubric
 
